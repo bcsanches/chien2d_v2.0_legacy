@@ -17,6 +17,16 @@ Copyright 2007-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
    limitations under the License.
 */
 
+/**
+
+	Data		Programador	Altera√ß√£o
+	=====================================================
+	13/08/2010	Paulo VW Radtke	Fun√ß√µes para mudar uma camada do mapa e para pegar a camada de marcas.
+
+
+**/
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -31,23 +41,23 @@ Copyright 2007-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
 
 char cabecalhos[6][5] ={ "FORM", "FMAP", "MPHD", "ANDT", "BODY", "LYR?"};
 
-// indica se a Chien2D2 Mappy j· foi inicializada. Por default, n„o foi ainda.
+// indica se a Chien2D2 Mappy j√° foi inicializada. Por default, n√£o foi ainda.
 bool m_inicializado = false;
 
 // O vetor com os mapas
 C2D2M_Mapa mapas[C2D2M_MAX_MAPAS];
-// Indica se o sistema est· em shutdown ou n„o
+// Indica se o sistema est√° em shutdown ou n√£o
 bool m_shutdown = false;
 
-// FunÁıes exclusivas para desenvolvimento interno. N„o use no seu programa!!
+// Fun√ß√µes exclusivas para desenvolvimento interno. N√£o use no seu programa!!
 
-// FunÁ„o para zerar os dados da Chien2D 2
+// Fun√ß√£o para zerar os dados da Chien2D 2
 void m_reset();
 
 
-// FunÁıes da C2D2 Mapa
+// Fun√ß√µes da C2D2 Mapa
 
-// FunÁ„o para zerar os dados da Chien2D 2
+// Fun√ß√£o para zerar os dados da Chien2D 2
 //
 // Data: 29/03/2007
 
@@ -58,7 +68,7 @@ void m_reset()
 	{
 		// Apaga o apelido
 		strcpy(mapas[i].apelido, "");
-		// Zera o n˙mero de usu·rios
+		// Zera o n√∫mero de usu√°rios
 		mapas[i].usuarios = 0;
 		// Zera o ponteiro das camadas
 		for(int j=0;j<C2D2M_MAX_CAMADAS;j++)
@@ -69,7 +79,7 @@ void m_reset()
 	}
 }
 
-// FunÁ„o para iniciar a Chien2D 2 Mapa
+// Fun√ß√£o para iniciar a Chien2D 2 Mapa
 //
 // Data: 27/07/2007
 
@@ -86,16 +96,16 @@ bool C2D2M_Inicia()
 }
 
 
-// FunÁ„o que encerra a Chien2D 2
+// Fun√ß√£o que encerra a Chien2D 2
 //
 // Data: 29/03/2007
 
 void C2D2M_Encerra()
 {
-    // Testa por via das d˙vidas para n„o ter problemas
+    // Testa por via das d√∫vidas para n√£o ter problemas
     if(!m_inicializado)
         return;
-    // Indica que est· encerrando
+    // Indica que est√° encerrando
     m_shutdown = true;
         
     printf("Apagando os mapas do sistema.\n");
@@ -107,40 +117,40 @@ void C2D2M_Encerra()
     m_inicializado=false;
 }
 
-// funÁ„o para carregar um sprite set na memÛria
+// fun√ß√£o para carregar um sprite set na mem√≥ria
 //
 // Data: 13/04/2007
 //
 unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquivo_spriteset)
 {
-    // Verifica se o mapa n„o existe j·
+    // Verifica se o mapa n√£o existe j√°
     unsigned int idx = C2D2M_ProcuraMapa(arquivo_mapa);
-    // Se j· existe um sprite com o nome do arquivo, retorna o Ìndice associado
+    // Se j√° existe um sprite com o nome do arquivo, retorna o √≠ndice associado
     if(idx != 0)
     {
 		mapas[idx-1].usuarios=mapas[idx-1].usuarios+1;
         return idx;
     }
         
-    // Se n„o existe, procura o primeiro Ìndice vago (idx ainda È igual a 0)
+    // Se n√£o existe, procura o primeiro √≠ndice vago (idx ainda √© igual a 0)
     for(int i=0;i<C2D2M_MAX_MAPAS;i++)
-        // O spriteset È vago (n„o tem imagem associada?
+        // O spriteset √© vago (n√£o tem imagem associada?
         if(!mapas[i].inicializado)
         {
             idx=i+1;
             break;
         }
  
-    // Testa se ainda tem espaÁo na lista
+    // Testa se ainda tem espa√ßo na lista
     //
-    // ATEN«√O: n„o ter espaÁo na memÛria n„o È relacionado a este teste. Apenas
-    // testa-se aqui se existe um Ìndice vago na lista. Se n„o existe, idx==0
+    // ATEN√á√ÉO: n√£o ter espa√ßo na mem√≥ria n√£o √© relacionado a este teste. Apenas
+    // testa-se aqui se existe um √≠ndice vago na lista. Se n√£o existe, idx==0
     if(idx==0)
-        // Retorna um Ìndice inv·lido para indicar que a funÁ„o falhou
+        // Retorna um √≠ndice inv√°lido para indicar que a fun√ß√£o falhou
         return 0;
     
-    // Se chegou atÈ aqui, idx contÈm o identificador correto 
-    // Calcula a posiÁ„o no array (sem incrementar 1)
+    // Se chegou at√© aqui, idx cont√©m o identificador correto 
+    // Calcula a posi√ß√£o no array (sem incrementar 1)
     idx-=1;    
 	// Indica o caminho do arquivo no apelido
     strcpy(mapas[idx].apelido,arquivo_mapa);
@@ -158,60 +168,60 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
 	fseek(mapa, 0, SEEK_END);
     int tamanho = ftell(mapa);
     fseek(mapa, 0, SEEK_SET);
-    // Aloca memÛria para o arquivo inteiro
+    // Aloca mem√≥ria para o arquivo inteiro
     char *buffer = (char *)malloc(tamanho*sizeof(char));
-    // LÍ os dados
+    // L√™ os dados
 	fread(buffer, sizeof(char), tamanho, mapa);
     // Fecha o arquivo
       fclose(mapa);
-    // Pega o "suposto" cabeÁalho do arquivo
+    // Pega o "suposto" cabe√ßalho do arquivo
     CabecalhoArquivo *cabArq = (CabecalhoArquivo*)buffer;
-    // Verifica se o cabecalho È certo
+    // Verifica se o cabecalho √© certo
     if(C2D2M_VerificaCabecalhoArquivo(cabArq))
     {
-        // Recupera o tamanho do arquivo (est· em BIG ENDIAN)
+        // Recupera o tamanho do arquivo (est√° em BIG ENDIAN)
         int tamanho = cabArq->tamanho;
         if(SDL_BYTEORDER == SDL_LIL_ENDIAN)
             tamanho = SDL_Swap32(tamanho);
         // O tamanho total soma 8
         tamanho+=8;
-        // Õndice dentro do buffer lido, j· pulando o header de 12 bytes
+        // √çndice dentro do buffer lido, j√° pulando o header de 12 bytes
         int indice=12;        
-        // Indica se o arquivo È armazenado em little endian (recupera do MPHD)
+        // Indica se o arquivo √© armazenado em little endian (recupera do MPHD)
         bool arquivoLilEndian=false;
-        // Indica se o sistema È lil endian (usado com a vari·vel em arquivo)
+        // Indica se o sistema √© lil endian (usado com a vari√°vel em arquivo)
         bool sistemaLilEndian = false;
         if(SDL_BYTEORDER == SDL_LIL_ENDIAN)
             sistemaLilEndian=true;
-        // Processa os chunks do arquivo enquanto o Ìndice estiver dentro do arquivo
+        // Processa os chunks do arquivo enquanto o √≠ndice estiver dentro do arquivo
         while(indice < tamanho)
         {
-            // pega o prÛximo chunk
+            // pega o pr√≥ximo chunk
             CabecalhoBloco *bloco = (CabecalhoBloco *)&(buffer[indice]);
             // Faz o indice apontar para os dados do bloco (pula 8 bytes)
             indice += 8;
-            // Pega o tamanho do bloco (est· no formato intel)
+            // Pega o tamanho do bloco (est√° no formato intel)
             int tamBloco = bloco->tamanho;
             if(SDL_BYTEORDER == SDL_LIL_ENDIAN)
                 tamBloco = SDL_Swap32(tamBloco);
-            //    Aqui extraÌmos as informaÁıes dos blocos. Nos interessam apenas
-            // o header do arquivo (MPHD), o cen·rio (BODY), os layers (LYR"X")
-            // e as animaÁıes (ANDT)
+            //    Aqui extra√≠mos as informa√ß√µes dos blocos. Nos interessam apenas
+            // o header do arquivo (MPHD), o cen√°rio (BODY), os layers (LYR"X")
+            // e as anima√ß√µes (ANDT)
             switch(C2D2M_TipoBloco(bloco))
             {
                 case CABECALHO_MPHD:
                 {
                     // Acessa o header
                     MPHD *mphd = (MPHD *)&(buffer[indice]);
-                    // O arquivo È codificado em Little Endian?
+                    // O arquivo √© codificado em Little Endian?
                     if(mphd->lsb)
                         arquivoLilEndian=true;
-                    // Extra as informaÁıes relevantes
+                    // Extra as informa√ß√µes relevantes
                     mapas[idx].altura = mphd->mapheight;
                     mapas[idx].largura = mphd->mapwidth;
                     mapas[idx].dimensaoBlocoH = mphd->blockwidth;
                     mapas[idx].dimensaoBlocoV = mphd->blockheight;
-                    // Se o sistema e arquivo n„o baterem
+                    // Se o sistema e arquivo n√£o baterem
                     if(arquivoLilEndian != sistemaLilEndian)
                     {
                         mapas[idx].altura = SDL_Swap16(mapas[idx].altura);
@@ -227,7 +237,7 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
                 // Bloco dos dados da camada principal (0)
                 case CABECALHO_BODY:
                 {
-                    // Aloca a memÛria do layer principal
+                    // Aloca a mem√≥ria do layer principal
 					mapas[idx].camadas[0] = (short int*)malloc(mapas[idx].altura*mapas[idx].largura*sizeof(short int));
                     // Copia os dados do buffer para a camada
                     memcpy(mapas[idx].camadas[0], (short int*)&(buffer[indice]), 
@@ -242,7 +252,7 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
                 {
                     // Determina a camada
                     int camada = bloco->tipo[3]-'0';
-                    // Aloca a memÛria do layer principal
+                    // Aloca a mem√≥ria do layer principal
                     mapas[idx].camadas[camada] = (short int*)malloc(mapas[idx].altura*mapas[idx].largura*sizeof(short int));
                     // Copia os dados do buffer para a camada
                     memcpy(mapas[idx].camadas[camada], (short int*)&(buffer[indice]), 
@@ -252,23 +262,23 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
                            mapas[idx].camadas[camada][i]=SDL_Swap16(mapas[idx].camadas[camada][i]); 
                     break;
                 }
-                // AnimaÁıes
+                // Anima√ß√µes
                 case CABECALHO_ANDT:
                 {
                     // Procura as estruturas ANISTR (tem que ter pelo menos uma)
                     int numAniStr=0;
                     while(true)
                     {
-                        // Pega a estrutura (a zero È vazia)
+                        // Pega a estrutura (a zero √© vazia)
                         numAniStr++;
 						memcpy(&(mapas[idx].estrutAnimacao[numAniStr]), 
                             (ANISTR*)&(buffer[indice+tamBloco-sizeof(ANISTR)*numAniStr]),
                             sizeof(ANISTR));
-                        // Se a animaÁ„o È do tipo AN_END, chegou ao fim
+                        // Se a anima√ß√£o √© do tipo AN_END, chegou ao fim
                         if(mapas[idx].estrutAnimacao[numAniStr].antype == AN_END)
                             break;
                     }
-                    // Extrai as sequÍncias de animaÁ„o: tamanho do bloco- ANISTR lidas
+                    // Extrai as sequ√™ncias de anima√ß√£o: tamanho do bloco- ANISTR lidas
                     int numAnimSeq=(tamBloco-sizeof(ANISTR)*numAniStr)/sizeof(long int);
                     memcpy(mapas[idx].seqAnimacao, (long int*)&(buffer[indice]),
                         sizeof(long int)*numAnimSeq);
@@ -287,11 +297,11 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
                     break;                    
                 }
                 
-                // Ignora o bloco e passa para o prÛximo
+                // Ignora o bloco e passa para o pr√≥ximo
                 default:
                     break;
             }
-            // Atualiza a posiÁ„o do Ìndice
+            // Atualiza a posi√ß√£o do √≠ndice
             indice += tamBloco;
         }
     }
@@ -302,28 +312,28 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
 
 	// Tenta carregar o spriteset
 	mapas[idx].idSpriteset = C2D2_CarregaSpriteSet(arquivo_spriteset, mapas[idx].dimensaoBlocoH, mapas[idx].dimensaoBlocoV);
-	// Se n„o conseguiu, apaga tudo
+	// Se n√£o conseguiu, apaga tudo
 	if(	mapas[idx].idSpriteset == 0)
 	{
 		C2D2M_RemoveMapa(idx+1);
 		return 0;
 	}
-	// Daqui pra frente È ladeira ...
+	// Daqui pra frente √© ladeira ...
 
 	// Zera as velocidades do mapa
 	memset(mapas[idx].vCamadas, 0, C2D2M_MAX_CAMADAS*sizeof(int));
-	// Indica que tem um usu·rio
+	// Indica que tem um usu√°rio
     mapas[idx].usuarios = 1;
 	// Coordenadas iniciais do mapa
 	mapas[idx].x=0;
 	mapas[idx].y=0;
 	// Camada de marcadores default: -1
 	mapas[idx].camadaMarcas = -1;
-	// Indica que n„o est· procurando um mapa
+	// Indica que n√£o est√° procurando um mapa
 	mapas[idx].buscaProximo = false;
 	// Coloca a velocidade default como 0 para mapas topview
 	mapas[idx].gravidade = 0;
-	// Coloca a velocidade de queda m·xima em 0
+	// Coloca a velocidade de queda m√°xima em 0
 	mapas[idx].maxgravidade = 0;
 	// Indica que inicializou
 	mapas[idx].inicializado = true;
@@ -332,22 +342,22 @@ unsigned int C2D2M_CarregaMapaMappy(const char *arquivo_mapa, const char *arquiv
 }
 
 
-// Remove um mapa da memÛria
+// Remove um mapa da mem√≥ria
 //
 // Data: 28/07/2007
 //
 void C2D2M_RemoveMapa(unsigned int id)
 {
-    // O identificador È v·lido?
+    // O identificador √© v√°lido?
     if(id >= C2D2M_MAX_MAPAS || id == 0)
         return;
-    // SÛ apaga se o n˙mero de usu·rios for um ou se estiver em shutdown
+    // S√≥ apaga se o n√∫mero de usu√°rios for um ou se estiver em shutdown
     if(mapas[id-1].usuarios > 1 && !m_shutdown)
     {
         mapas[id-1].usuarios -= 1;
         return;
     }
-    // Se cair aqui, È porquÍ n„o tem mais usu·rios
+    // Se cair aqui, √© porqu√™ n√£o tem mais usu√°rios
     mapas[id-1].usuarios = 0;
     // Tem uma surface SDL associada?
 	if(mapas[id-1].idSpriteset != 0)
@@ -362,7 +372,7 @@ void C2D2M_RemoveMapa(unsigned int id)
 			mapas[id-1].camadas[i] = 0;
 		}
 	strcpy(mapas[id-1].apelido, "");
-	// Enfim, indica que n„o est· inicializado
+	// Enfim, indica que n√£o est√° inicializado
 	mapas[id-1].inicializado = false;
 }
 
@@ -373,12 +383,12 @@ void C2D2M_RemoveMapa(unsigned int id)
 //
 unsigned int C2D2M_ProcuraMapa(const char *apelido)
 {
-    // Õndice de spriteset inv·lido, caso n„o encontre
+    // √çndice de spriteset inv√°lido, caso n√£o encontre
     unsigned int idx=0;
     for(int i=0;i<C2D2M_MAX_MAPAS;i++)
         if(strcmp(mapas[i].apelido, apelido)==0)
         {
-            // O Ìndice È a posiÁ„o atual + 1
+            // O √≠ndice √© a posi√ß√£o atual + 1
             idx=i+1;
             // Encerra a busca
             break;
@@ -386,17 +396,17 @@ unsigned int C2D2M_ProcuraMapa(const char *apelido)
     return idx;
 }
 
-// FunÁ„o para ver as dimensıes do mapa (retorna true se o mapa È v·lido, false caso contr·rio)
+// Fun√ß√£o para ver as dimens√µes do mapa (retorna true se o mapa √© v√°lido, false caso contr√°rio)
 //
 // Data: 26/01/2005
-// ⁄ltima atualizaÁ„o: 02/08/2007
+// √öltima atualiza√ß√£o: 02/08/2007
 
 bool C2D2M_DimensoesMapa(unsigned int idMapa, int *largura, int *altura)
 {
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(idMapa >= C2D2M_MAX_MAPAS)
 		return false;
-    // Se n„o foi inicializado, falha!
+    // Se n√£o foi inicializado, falha!
     if(!mapas[idMapa-1].inicializado)
         return false;
     // Preenche os valores
@@ -410,25 +420,25 @@ bool C2D2M_DimensoesMapa(unsigned int idMapa, int *largura, int *altura)
 // Data: 16/08/2006
 void C2D2M_PosicionaMapa(unsigned int idMapa, int x, int y)
 {
-    // O identificador È v·lido?
+    // O identificador √© v√°lido?
     if(idMapa >= C2D2M_MAX_MAPAS || idMapa == 0)
         return;
-    // Se n„o foi inicializado, falha!
+    // Se n√£o foi inicializado, falha!
     if(!mapas[idMapa-1].inicializado)
         return;
 	mapas[idMapa-1].x = x;
 	mapas[idMapa-1].y = y;
 }
 
-// Recupera a posiÁ„o do mapa
+// Recupera a posi√ß√£o do mapa
 //
 // Data: 16/08/2006
 bool C2D2M_PosicaoXY(unsigned int idMapa, int *x, int *y)
 {
-    // O identificador È v·lido?
+    // O identificador √© v√°lido?
     if(idMapa >= C2D2M_MAX_MAPAS || idMapa == 0)
         return false;
-    // Se n„o foi inicializado, falha!
+    // Se n√£o foi inicializado, falha!
     if(!mapas[idMapa-1].inicializado)
         return false;
 	*x = mapas[idMapa-1].x;
@@ -436,77 +446,77 @@ bool C2D2M_PosicaoXY(unsigned int idMapa, int *x, int *y)
 	return true;
 }
 
-// FunÁ„o para dar velocidade a uma camada do mapa
+// Fun√ß√£o para dar velocidade a uma camada do mapa
 //
 // Data: 02/08/2007
 
 void C2D2M_VelocidadeCamadaMapa(unsigned int idMapa, int camada, int velocidade)
 {
-	// … um mapa v·lido?
+	// √â um mapa v√°lido?
 	if(idMapa==0 || idMapa >= C2D2M_MAX_MAPAS)
 		return;
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(camada >= C2D2M_MAX_MAPAS || camada <0)
 		return;
-    // Se n„o foi inicializado, falha!
+    // Se n√£o foi inicializado, falha!
     if(!mapas[idMapa-1].inicializado)
         return;
-	// A camada È v·lida?
+	// A camada √© v√°lida?
 	if(camada<0 || camada>=C2D2M_MAX_CAMADAS)
 		return;
 	mapas[idMapa-1].vCamadas[camada] = velocidade;
 }
 
-// FunÁ„o para indicar a camada de marcas do mapa e o n˙mero do bloco inicial de marcas no cen·rio
+// Fun√ß√£o para indicar a camada de marcas do mapa e o n√∫mero do bloco inicial de marcas no cen√°rio
 //
 // Data: 16/08/2007
 //
 bool C2D2M_CamadaMarcas(unsigned int idMapa, int camada, int offbloco)
 {
-	// … um mapa v·lido?
+	// √â um mapa v√°lido?
 	if(idMapa==0 || idMapa >= C2D2M_MAX_MAPAS)
 		return false;
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(camada >= C2D2M_MAX_MAPAS)
 		return false;
 	// Enfim, marca a camada
 	mapas[idMapa-1].camadaMarcas = camada;
 	mapas[idMapa-1].offbloco = offbloco;
-	// Reseta a busca de blocos, caso alguÈm use um dia a habilidade de mudar as camadas do mapa
+	// Reseta a busca de blocos, caso algu√©m use um dia a habilidade de mudar as camadas do mapa
 	mapas[idMapa-1].buscaProximo = false;
 	return true;
 }
 
 
-// MÈtodo para desenhar o mapa na tela a partir das coordenadas x,y do mapa
+// M√©todo para desenhar o mapa na tela a partir das coordenadas x,y do mapa
 //
 // Data: 26/01/2005
-// ⁄ltima atualizaÁ„o: 28/01/2005
+// √öltima atualiza√ß√£o: 28/01/2005
 
 
-// FunÁ„o para desenhar uma camada do mapa na tela a partir das coordenadas do mapa (x,y na estrutura), dentro da janela especificada
-// por xtela,ytela e as dimensıes largura e altura.
+// Fun√ß√£o para desenhar uma camada do mapa na tela a partir das coordenadas do mapa (x,y na estrutura), dentro da janela especificada
+// por xtela,ytela e as dimens√µes largura e altura.
 //
 // Data: 28/01/2005
-// ⁄ltima atualizaÁ„o: 16/08/2007
+// √öltima atualiza√ß√£o: 16/08/2007
 
 void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int ytela, int largura, int altura)
 {
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(idMapa > C2D2M_MAX_MAPAS || idMapa ==0)
 		return;
 	if(!mapas[idMapa-1].inicializado)
         return;
-    // TEsta se È um layer v·lido
+    // TEsta se √© um layer v√°lido
 	if(camada >= C2D2M_MAX_CAMADAS || camada <0)
         return;
-	// Pega o ponteiro do mapa (mais r·pido)
+	// Pega o ponteiro do mapa (mais r√°pido)
 	C2D2M_Mapa *mapa = &mapas[idMapa-1];
     // Testa se o layer existe
 	if(mapa->camadas[camada] == 0)
         return;
 	
-    // SÛ desenha o mapa se o ponto ‚ncora for dentro do mapa e o mapa couber na tela
+    // S√≥ desenha o mapa se o ponto √¢ncora for dentro do mapa e o mapa couber na tela
 
 	if(mapa->x<0 || mapa->y<0 || mapa->x>(mapa->larguraPixel-largura) 
 		|| mapa->y>( mapa->alturaPixel - altura))
@@ -525,7 +535,7 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
 	}
 	// Pega a surface da tela
 /*	SDL_Surface *tela = SDL_GetVideoSurface();
-	// Prepara o ret‚ngulo de cliping
+	// Prepara o ret√¢ngulo de cliping
 	SDL_Rect rect;
 	rect.x=xtela;
 	rect.y=ytela;
@@ -533,10 +543,10 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
 	rect.h=altura;
 	// Clipa!
 	SDL_SetClipRect(tela, &rect);*/
-	// Determina as dimensıes da tela em sprites (quanto vai desenhar)
+	// Determina as dimens√µes da tela em sprites (quanto vai desenhar)
 	int larguraSprites = largura/mapa->dimensaoBlocoH;
 	int alturaSprites = altura/mapa->dimensaoBlocoV;
-	// Se as dimensıes da janela n„o s„o m˙ltiplos do tamanho do sprite, tem que desenhar um bloco a mais
+	// Se as dimens√µes da janela n√£o s√£o m√∫ltiplos do tamanho do sprite, tem que desenhar um bloco a mais
 	if(largura%mapa->dimensaoBlocoH)
 		larguraSprites++;
 	if(altura%mapa->dimensaoBlocoV)
@@ -547,15 +557,15 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
     // DEtermina o offset em pixels DENTRO do sprite
     int offsetX = xmapa%mapa->dimensaoBlocoH;
     int offsetY = ymapa%mapa->dimensaoBlocoV;
-    // Se tem offset, pode ser preciso desenhar um bloco a mais em cada direÁ„o
-	// Para determinar se precisa ou n„o do offset, verificamos se o offset È maior que o resto da divis„o pelo tamanho do bloco
-    // Nota: n„o precisa verificar se vai ultrapassar o limite fÌsico do mapa 
-    // porque o teste da posiÁ„o no mapa acima j· faz isso
+    // Se tem offset, pode ser preciso desenhar um bloco a mais em cada dire√ß√£o
+	// Para determinar se precisa ou n√£o do offset, verificamos se o offset √© maior que o resto da divis√£o pelo tamanho do bloco
+    // Nota: n√£o precisa verificar se vai ultrapassar o limite f√≠sico do mapa 
+    // porque o teste da posi√ß√£o no mapa acima j√° faz isso
     if(offsetX)
         larguraSprites++;
     if(offsetY)
         alturaSprites++;
-	// O sprite a ser desenhado em cada posiÁ„o
+	// O sprite a ser desenhado em cada posi√ß√£o
 	int sprite;
     // Desenha o mapa
     for(int linha=0;linha<alturaSprites;linha++)
@@ -563,12 +573,12 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
         {
             // Recupera o azulejo a desenhar
 			sprite = mapa->camadas[camada][mapa->largura*(linha+blocoY)+coluna+blocoX];
-            // Se o sprite for negativo, recupera o sprite na lista de animaÁıes
+            // Se o sprite for negativo, recupera o sprite na lista de anima√ß√µes
             if(sprite < 0)
-                //    Como o valor È negativo, tem que negar antes, 
-                // pegando na sequÍncia de animaÁ„o
+                //    Como o valor √© negativo, tem que negar antes, 
+                // pegando na sequ√™ncia de anima√ß√£o
                 sprite = mapa->seqAnimacao[mapa->estrutAnimacao[-sprite].ancuroff];
-            // N„o desenha o sprite 0 (transparente)
+            // N√£o desenha o sprite 0 (transparente)
             if(sprite!=0)
 				C2D2_DesenhaSprite(mapa->idSpriteset, sprite-1, xtela+coluna*mapa->dimensaoBlocoH-offsetX,
 					ytela+linha*mapa->dimensaoBlocoV-offsetY);
@@ -577,12 +587,12 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
 	//SDL_SetClipRect(tela, 0);
 }
 
-// funÁ„o para buscar as coordenadas da primeira ocorrÍncia de um bloco de marca dentro de um mapa
+// fun√ß√£o para buscar as coordenadas da primeira ocorr√™ncia de um bloco de marca dentro de um mapa
 //
 // Data: 17/08/2007
 bool C2D2M_PrimeiroBlocoMarca(unsigned int idMapa, int bloco, int *x, int *y)
 {
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(idMapa >= C2D2M_MAX_MAPAS || idMapa ==0)
 		return false;
 	if(!mapas[idMapa-1].inicializado)
@@ -593,20 +603,20 @@ bool C2D2M_PrimeiroBlocoMarca(unsigned int idMapa, int bloco, int *x, int *y)
 	if(mapa->camadaMarcas == -1)
         return false;
 	int pos;
-	// Procura em cada posiÁ„o atÈ achar
+	// Procura em cada posi√ß√£o at√© achar
 	for(pos=0;pos<mapa->largura*mapa->altura;pos++)
 	{
 		if(mapa->camadas[mapa->camadaMarcas][pos]==bloco+mapa->offbloco)
 			break;
 	}
-	// Se achou, pos È menor que o n˙mero total de blocos na camada
+	// Se achou, pos √© menor que o n√∫mero total de blocos na camada
 	if(pos>=mapa->largura*mapa->altura)
 		return false;
 	// Se chegou aqui, achou o bloco!!
-	// Calcula a posiÁ„o
+	// Calcula a posi√ß√£o
 	*x = (pos % mapa->largura) * mapa->dimensaoBlocoH + mapa->dimensaoBlocoH/2;
 	*y = (pos / mapa->largura) * mapa->dimensaoBlocoV + mapa->dimensaoBlocoV/2;
-	// Guarda a informaÁ„o para a chamada de C2D2M_ProximoBlocoMarca
+	// Guarda a informa√ß√£o para a chamada de C2D2M_ProximoBlocoMarca
 	mapa->buscaProximo = true;
 	mapa->posicaoUltimo = pos;
 	mapa->blocoProcurado = bloco;
@@ -614,12 +624,12 @@ bool C2D2M_PrimeiroBlocoMarca(unsigned int idMapa, int bloco, int *x, int *y)
 	return true;
 }
 
-// funÁ„o para buscar as coordenadas da prÛxima ocorrÍncia de um bloco de marca dentro de um mapa. Usar apenas AP”S C2D2M_PrimeiroBlocoMarca.
+// fun√ß√£o para buscar as coordenadas da pr√≥xima ocorr√™ncia de um bloco de marca dentro de um mapa. Usar apenas AP√ìS C2D2M_PrimeiroBlocoMarca.
 //
 // Data: 23/08/2007
 bool C2D2M_ProximoBlocoMarca(unsigned int idMapa, int *x, int *y)
 {
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(idMapa >= C2D2M_MAX_MAPAS || idMapa ==0)
 		return false;
 	if(!mapas[idMapa-1].inicializado)
@@ -627,38 +637,38 @@ bool C2D2M_ProximoBlocoMarca(unsigned int idMapa, int *x, int *y)
 	// Recupera o mapa
 	C2D2M_Mapa *mapa = &mapas[idMapa-1];
 
-	// TEsta: est· procurando uma seq¸Íncia de blocos??
+	// TEsta: est√° procurando uma seq√º√™ncia de blocos??
 	if(!mapa->buscaProximo)
 		return false;
-	// Se chegou aqui, a camada de marcas existe e È v·lida. Busca
+	// Se chegou aqui, a camada de marcas existe e √© v√°lida. Busca
 	int pos;
-	// Procura em cada posiÁ„o atÈ achar
+	// Procura em cada posi√ß√£o at√© achar
 	for(pos=mapa->posicaoUltimo+1;pos<mapa->largura*mapa->altura;pos++)
 	{
 		if(mapa->camadas[mapa->camadaMarcas][pos]==mapa->blocoProcurado+mapa->offbloco)
 			break;
 	}
-	// Se achou, pos È menor que o n˙mero total de blocos na camada
+	// Se achou, pos √© menor que o n√∫mero total de blocos na camada
 	if(pos>=mapa->largura*mapa->altura)
 	{
-		// Indica que n„o est· mais procurando o prÛximo
+		// Indica que n√£o est√° mais procurando o pr√≥ximo
 		mapa->buscaProximo = false;
 		return false;
 	}
 	// Se chegou aqui, achou o bloco!!
-	// Calcula a posiÁ„o
+	// Calcula a posi√ß√£o
 	*x = (pos % mapa->largura) * mapa->dimensaoBlocoH + mapa->dimensaoBlocoH/2;
 	*y = (pos / mapa->largura) * mapa->dimensaoBlocoV + mapa->dimensaoBlocoV/2;
-	// Guarda a informaÁ„o para a prÛxima chamada de C2D2M_ProximoBlocoMarca
+	// Guarda a informa√ß√£o para a pr√≥xima chamada de C2D2M_ProximoBlocoMarca
 	mapa->posicaoUltimo = pos;
 	// Retorna verdade
 	return true;
 }
 
-// FunÁ„o que indica a aceleraÁ„o de gravidade do mapa, em pixels por segundo, e a velocidade m·xima de gravidade para simular atrito
+// Fun√ß√£o que indica a acelera√ß√£o de gravidade do mapa, em pixels por segundo, e a velocidade m√°xima de gravidade para simular atrito
 bool C2D2M_GravidadeMapa(unsigned int idMapa, double gravidade, double maxgravidade)
 {
-	// … um Ìndice v·lido?
+	// √â um √≠ndice v√°lido?
 	if(idMapa >= C2D2M_MAX_MAPAS || idMapa ==0)
 		return false;
 	if(!mapas[idMapa-1].inicializado)
@@ -674,7 +684,7 @@ bool C2D2M_GravidadeMapa(unsigned int idMapa, double gravidade, double maxgravid
 // Anima os blocos animados do mapa. Atualiza os quadros, reseta e etc e tal
 //
 // Data: 27/01/2005
-// ⁄ltima atualizaÁ„o: 02/08/2007
+// √öltima atualiza√ß√£o: 02/08/2007
 
 void C2D2M_AnimaMapa(unsigned int id)
 {
@@ -682,25 +692,25 @@ void C2D2M_AnimaMapa(unsigned int id)
 		return;
 	// Pega o ponteiro do mapa
 	C2D2M_Mapa *mapa = &mapas[id-1];
-	// Testa se pode fazer a operaÁ„o
+	// Testa se pode fazer a opera√ß√£o
     if(!mapa->inicializado)
         return;    
-    // Procura as animaÁıes (0 n„o existe, lembrando)
+    // Procura as anima√ß√µes (0 n√£o existe, lembrando)
     int indice = 1;
     while(mapa->estrutAnimacao[indice].antype != AN_END)
     {
-        //     Verifica se n„o È uma animaÁ„o (sÛ Deus sabe porque isso existe)
+        //     Verifica se n√£o √© uma anima√ß√£o (s√≥ Deus sabe porque isso existe)
         //     Se verdade, pula (acredite, isso faz tanto sentido pra mim como 
-        // pra vocÍ, afinal, n„o È pra ser ANIMADO?!?
+        // pra voc√™, afinal, n√£o √© pra ser ANIMADO?!?
         if(mapa->estrutAnimacao[indice].antype == AN_NONE)
             continue;
-        // Se a animaÁ„o zera, tem que atualizar
+        // Se a anima√ß√£o zera, tem que atualizar
         if((mapa->estrutAnimacao[indice].ancount-=1) == 0)
         {
             // Armazena o delay novo
             mapa->estrutAnimacao[indice].ancount = mapa->estrutAnimacao[indice].andelay;
-            //    Atualiza o frame e, se estourou, volta para o inÌcio de acordo
-            // com o tipo da animaÁ„o
+            //    Atualiza o frame e, se estourou, volta para o in√≠cio de acordo
+            // com o tipo da anima√ß√£o
             switch(mapa->estrutAnimacao[indice].antype)
             {
                 // Loop pra frente
@@ -717,7 +727,7 @@ void C2D2M_AnimaMapa(unsigned int id)
                         mapa->estrutAnimacao[indice].ancuroff = mapa->estrutAnimacao[indice].anendoff-1;
                     break;
                 }
-                // Anima uma ˙nica vez (n„o muit o˙til se n„o for na primeira tela)
+                // Anima uma √∫nica vez (n√£o muit o√∫til se n√£o for na primeira tela)
                 case AN_ONCE:            
                 {
                     if(mapa->estrutAnimacao[indice].anuser)
@@ -727,10 +737,10 @@ void C2D2M_AnimaMapa(unsigned int id)
                         mapa->estrutAnimacao[indice].anuser = true;
                     break;        
                 }
-                // AnimaÁ„o ping-pong pra frente
+                // Anima√ß√£o ping-pong pra frente
                 case AN_PPFF:
                 {
-                    // Se verdade, vai de marcha-rÈ
+                    // Se verdade, vai de marcha-r√©
                     if(mapa->estrutAnimacao[indice].anuser==0)
                     {
                         if((mapa->estrutAnimacao[indice].ancuroff-=1) < mapa->estrutAnimacao[indice].anstartoff)
@@ -749,7 +759,7 @@ void C2D2M_AnimaMapa(unsigned int id)
                     }   
                     break;
                 }
-                // AnimaÁ„o ping-pong pra tr·s
+                // Anima√ß√£o ping-pong pra tr√°s
                 case AN_PPRR:
                 {
                     // Se verdade, vai pra frente
@@ -777,29 +787,29 @@ void C2D2M_AnimaMapa(unsigned int id)
                 
             }
         }
-        // PrÛxima animaÁ„o
+        // Pr√≥xima anima√ß√£o
         indice++;
     }
 }
 
 // Ajusta o deslocamento de um boundingbox no mapa. Recebe o mapa aonde o deslocamento
-// se realiza, a posiÁ„o do bounding box e o quanto deve mover no eixo x e y. O booleano
-// gravidade indica se h· gravidade, situaÁ„o na qual deslocamentos verticais para baixo
-// e cima n„o implicam em deslocamento no eixo x. 
+// se realiza, a posi√ß√£o do bounding box e o quanto deve mover no eixo x e y. O booleano
+// gravidade indica se h√° gravidade, situa√ß√£o na qual deslocamentos verticais para baixo
+// e cima n√£o implicam em deslocamento no eixo x. 
 //
-//  Os par‚metros s„o o identificador do mapa (idMapa), as coordenadas do bounding box
-// (x,y), as dimensıes do bounding box (largura), os ponteiros para o deslocamento 
-// (dx e dy) e se a gravidade est· em aÁ„o.
+//  Os par√¢metros s√£o o identificador do mapa (idMapa), as coordenadas do bounding box
+// (x,y), as dimens√µes do bounding box (largura), os ponteiros para o deslocamento 
+// (dx e dy) e se a gravidade est√° em a√ß√£o.
 //
 // Data: XX/XX/2007
-// ⁄ltima atualizaÁ„o: 28/08/2008
+// √öltima atualiza√ß√£o: 28/08/2008
 //
 void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig, 
 							  int larg, int alt, int *dx, int *dy, bool gravidade)
 {
 	if(idMapa == 0 || idMapa>=C2D2M_MAX_MAPAS)
 		return;
-	// SE o mapa n„o foi inicializado, ou se a camada de marcas est· na default (-1)
+	// SE o mapa n√£o foi inicializado, ou se a camada de marcas est√° na default (-1)
 	if(!mapas[idMapa-1].inicializado || mapas[idMapa-1].camadaMarcas==-1)
 		return;
 	// REcupera o valor de x e y originais
@@ -808,9 +818,9 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 	C2D2M_Mapa *mapa = &mapas[idMapa-1];
 	// Bounding box
 	int topo, baixo, esquerda, direita;
-	// A referÍncia do ator para inclinaÁıes, o quanto entra no bloco e a diferenÁa de pontos
+	// A refer√™ncia do ator para inclina√ß√µes, o quanto entra no bloco e a diferen√ßa de pontos
 	int meio, entrou, dif;
-	// Qual a maior dist‚ncia percorrida (mais tarde, passa para o personagem)
+	// Qual a maior dist√¢ncia percorrida (mais tarde, passa para o personagem)
 	int maior;
 	// Qual o bloco
 	int bloco;
@@ -828,7 +838,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 		dyl=1;
 	else if(*dy < 0)
 		dyl=-1;
-	// As vari·veis para indicar se deve deslocar ou n„o
+	// As vari√°veis para indicar se deve deslocar ou n√£o
 	int xant=0, yant=0;
 	// Percorre os pixels no maior eixo
 	for(int i = 1; i <= maior ; i++)
@@ -846,7 +856,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 			direita = (x+larg-1)/mapa->dimensaoBlocoH;
 			// Calcula o bloco em que se encontra o meio
 			meio = (x+larg/2)/mapa->dimensaoBlocoH;
-			// Testa a colis„o com blocos inclinados
+			// Testa a colis√£o com blocos inclinados
 			if(meio >=0 && meio <= mapa->largura && mapa->dimensaoBlocoH == mapa->dimensaoBlocoV)
 			{
 				// ajusta pela parte de baixo
@@ -867,7 +877,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						if(dif < entrou)
 							y -= entrou-dif;
 							//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_BAIXO);
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						baixo--;
 						break;
 					case C2D2M_SOLIDO22A:
@@ -881,7 +891,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						// Aqui colide e ajusta
 						if(dif < entrou/2)
 							y -= entrou/2-dif;
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						baixo--;
 						break;
 					case C2D2M_SOLIDO22B:
@@ -898,7 +908,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 							y -= (entrou+mapa->dimensaoBlocoV)/2-dif;
 							//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_BAIXO);
 						}
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						baixo--;
 						break;
 					}
@@ -921,7 +931,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						// Aqui colide e ajusta
 						if(dif < entrou)
 							y += entrou-dif;
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						topo++;
 						break;
 					case C2D2M_SOLIDO202B:
@@ -938,7 +948,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 							y += entrou/2-dif;
 							//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_CIMA);
 						}
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						topo++;
 						break;
 					case C2D2M_SOLIDO202A:
@@ -955,20 +965,20 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 							y += (entrou+mapa->dimensaoBlocoV)/2-dif;
 							//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_CIMA);
 						}
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						topo++;
 						break;
 					}
 				}
 			}
 
-			// Testa a colis„o com blocos completamente sÛlidos
+			// Testa a colis√£o com blocos completamente s√≥lidos
 			for(int lin=topo;lin<=baixo;lin++)
 			{
-				// Testa se est· dentro das coordenadas v·lidas
+				// Testa se est√° dentro das coordenadas v√°lidas
 				if(lin < 0 || lin >= mapa->altura)
 					continue;
-				// Testa se ainda est· dentro do mapa ‡ esquerda 
+				// Testa se ainda est√° dentro do mapa √† esquerda 
 				if(esquerda >= 0 && esquerda <= mapa->largura && dxl<0)
 					// Testa se colidiu
 					if(mapa->camadas[mapa->camadaMarcas][mapa->largura*lin+esquerda] == mapa->offbloco + C2D2M_SOLIDO)
@@ -977,7 +987,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						x++; 
 						break;
 					}
-				// Testa se ainda est· dentro do mapa ‡ direita 
+				// Testa se ainda est√° dentro do mapa √† direita 
 				if(direita >= 0 && direita <= mapa->largura && dxl>0)
 					// Testa se colidiu
 					if(mapa->camadas[mapa->camadaMarcas][mapa->largura*lin+direita] == mapa->offbloco + C2D2M_SOLIDO)
@@ -988,7 +998,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 					}
 			}
 		}
-		// Teste de ajuste na vertical para quando n„o h· gravidade
+		// Teste de ajuste na vertical para quando n√£o h√° gravidade
 		if(dyl !=0 && (i * *dy)/maior != yant && !gravidade)
 		{
 			yant = (i * *dy)/maior;
@@ -999,9 +1009,9 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 			baixo = (y+alt-1)/mapa->dimensaoBlocoV;
 			esquerda = (x)/mapa->dimensaoBlocoH;
 			direita = (x+larg-1)/mapa->dimensaoBlocoH;
-			// Calcula o bloco em que se encontra o meio. Agora, o meio È na horizontal!
+			// Calcula o bloco em que se encontra o meio. Agora, o meio √© na horizontal!
 			meio = (y+alt/2)/mapa->dimensaoBlocoV;
-			// Testa a colis„o com blocos inclinados
+			// Testa a colis√£o com blocos inclinados
 			if(meio >=0 && meio <= mapa->altura && mapa->dimensaoBlocoH == mapa->dimensaoBlocoV)
 			{
 				// ajusta pela parte da esquerda
@@ -1021,7 +1031,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						// Aqui colide e ajusta
 						if(dif < entrou)
 							x += entrou-dif;
-						// Encerra a verificaÁ„o
+						// Encerra a verifica√ß√£o
 						esquerda++;
 						break;
 					case C2D2M_SOLIDO157A:
@@ -1038,7 +1048,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 							x += entrou*2-dif;
 
 						}
-						// Encerra a verificaÁ„o
+						// Encerra a verifica√ß√£o
 						esquerda++;
 						break;
 					case C2D2M_SOLIDO157B:
@@ -1054,7 +1064,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						{
 							x += entrou*2 - mapa->dimensaoBlocoV-dif;
 						}
-						// Encerra a verificaÁ„o
+						// Encerra a verifica√ß√£o
 						esquerda++;
 						break;
 
@@ -1077,7 +1087,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						// Aqui colide e ajusta
 						if(dif < entrou)
 							x -= entrou-dif;
-						// Encerra a verificaÁ„o
+						// Encerra a verifica√ß√£o
 						direita--;
 						break;
 					case C2D2M_SOLIDO22B:
@@ -1094,7 +1104,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 							x -= entrou*2-dif;
 							//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_BAIXO);
 						}
-						// Encerra a verificaÁ„o
+						// Encerra a verifica√ß√£o
 						direita--;
 						break;
 					case C2D2M_SOLIDO22A:
@@ -1111,7 +1121,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 							//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_BAIXO);
 							x -= entrou*2-mapa->dimensaoBlocoV-dif;
 						}
-						// Encerra a verificaÁ„o
+						// Encerra a verifica√ß√£o
 						direita--;
 						break;
 
@@ -1119,13 +1129,13 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 
 				}
 			}
-			// Testa a colis„o com bloco completamente sÛlido na vertical
+			// Testa a colis√£o com bloco completamente s√≥lido na vertical
 			for(int col=esquerda;col<=direita;col++)
 			{
-				// Testa se est· dentro das coordenadas v·lidas
+				// Testa se est√° dentro das coordenadas v√°lidas
 				if(col < 0 || col >= mapa->largura)
 					continue;
-				// Testa se ainda est· dentro do mapa acima
+				// Testa se ainda est√° dentro do mapa acima
 				if(topo >= 0 && topo <= mapa->altura && dyl<0)
 					// Testa se colidiu
 					if(mapa->camadas[mapa->camadaMarcas][mapa->largura*topo+col] == mapa->offbloco + C2D2M_SOLIDO)
@@ -1135,7 +1145,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_CIMA);
 						break;
 					}
-				// Testa se ainda est· dentro do mapa abaixo 
+				// Testa se ainda est√° dentro do mapa abaixo 
 				if(baixo >= 0 && baixo <= mapa->altura && dyl>0)
 					// Testa se colidiu
 					if(mapa->camadas[mapa->camadaMarcas][mapa->largura*baixo+col] == mapa->offbloco + C2D2M_SOLIDO)
@@ -1149,7 +1159,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 
 
 		}
-		// Teste de ajuste na vertical para quando h· gravidade e velocidade no y
+		// Teste de ajuste na vertical para quando h√° gravidade e velocidade no y
 		if(dyl != 0 && (i * *dy)/maior != yant && gravidade)
 		{
 			yant = (i * *dy)/maior;
@@ -1160,9 +1170,9 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 			baixo = (y+alt-1)/mapa->dimensaoBlocoV;
 			esquerda = (x)/mapa->dimensaoBlocoH;
 			direita = (x+larg-1)/mapa->dimensaoBlocoH;
-			// Calcula o bloco em que se encontra o meio. Agora, o meio È na horizontal!
+			// Calcula o bloco em que se encontra o meio. Agora, o meio √© na horizontal!
 			meio = (x+larg/2)/mapa->dimensaoBlocoH;
-			// Testa a colis„o com blocos inclinados
+			// Testa a colis√£o com blocos inclinados
 			if(meio >=0 && meio <= mapa->largura && mapa->dimensaoBlocoH == mapa->dimensaoBlocoV)
 			{
 				// ajusta pela parte de baixo
@@ -1182,7 +1192,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						// Aqui colide e ajusta
 						if(dif < entrou)
 							y -= 1;//entrou-dif;
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						//baixo--;
 						esquerda++;
 						break;
@@ -1213,7 +1223,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						{
 							y --;//= (entrou+mapa->dimensaoBlocoV)/2-dif;
 						}
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						//baixo--;
 						esquerda++;
 						break;
@@ -1251,7 +1261,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						// Aqui colide e ajusta
 						if(dif < entrou/2)
 							y += entrou/2-dif;
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						//topo++;
 						direita--;
 						break;
@@ -1267,7 +1277,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						if(dif < (entrou+mapa->dimensaoBlocoV)/2)
 							y += (entrou+mapa->dimensaoBlocoV)/2-dif;
 
-						// N„o verifica a colis„o na horizontal nesta linha
+						// N√£o verifica a colis√£o na horizontal nesta linha
 						//topo++;
 						direita--;
 						break;
@@ -1275,13 +1285,13 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 				}
 
 			}
-			// Testa a colis„o com bloco completamente sÛlido na vertical
+			// Testa a colis√£o com bloco completamente s√≥lido na vertical
 			for(int col=esquerda;col<=direita;col++)
 			{
-				// Testa se est· dentro das coordenadas v·lidas
+				// Testa se est√° dentro das coordenadas v√°lidas
 				if(col < 0 || col >= mapa->largura)
 					continue;
-				// Testa se ainda est· dentro do mapa acima
+				// Testa se ainda est√° dentro do mapa acima
 				if(topo >= 0 && topo <= mapa->altura && dyl<0)
 					// Testa se colidiu
 					if(mapa->camadas[mapa->camadaMarcas][mapa->largura*topo+col] == mapa->offbloco + C2D2M_SOLIDO)
@@ -1291,7 +1301,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 						//ATOR_InsereEvento(a, EVT_COLIDIU_PAREDE_CIMA);
 						break;
 					}
-				// Testa se ainda est· dentro do mapa abaixo 
+				// Testa se ainda est√° dentro do mapa abaixo 
 				if(baixo >= 0 && baixo <= mapa->altura && dyl>0)
 					// Testa se colidiu
 					if(mapa->camadas[mapa->camadaMarcas][mapa->largura*baixo+col] == mapa->offbloco + C2D2M_SOLIDO)
@@ -1308,7 +1318,7 @@ void C2D2M_AjustaDeslocamento(unsigned int idMapa, int xorig, int yorig,
 
 
 
-		// Para cada passo, verifica as colisıes
+		// Para cada passo, verifica as colis√µes
 		//ATOR_ColideBoundingBox(a, mapa);
 
 	}
@@ -1324,7 +1334,7 @@ bool C2D2M_CalculaQueda(unsigned int idMapa, int quadrosQueda, double *vqueda)
 {
 	if(idMapa == 0 || idMapa>=C2D2M_MAX_MAPAS)
 		return false;
-	// SE o mapa n„o foi inicializado, ou se a camada de marcas est· na default (-1)
+	// SE o mapa n√£o foi inicializado, ou se a camada de marcas est√° na default (-1)
 	if(!mapas[idMapa-1].inicializado || mapas[idMapa-1].camadaMarcas==-1)
 		return false;
 	
@@ -1345,7 +1355,7 @@ bool C2D2M_CalculaQueda(unsigned int idMapa, int quadrosQueda, double *vqueda)
     return true;
 }
 
-// Testa se um bounding box colide com um bloco qualquer de cen·rio.
+// Testa se um bounding box colide com um bloco qualquer de cen√°rio.
 //
 // Data: 28/08/2008
 //
@@ -1353,13 +1363,13 @@ bool C2D2M_ColidiuBlocoCenario(unsigned int idMapa, int x, int y, int larg, int 
 {
 	if(idMapa == 0 || idMapa>=C2D2M_MAX_MAPAS)
 		return false;
-	// SE o mapa n„o foi inicializado, ou se a camada de marcas est· na default (-1)
+	// SE o mapa n√£o foi inicializado, ou se a camada de marcas est√° na default (-1)
 	if(!mapas[idMapa-1].inicializado || mapas[idMapa-1].camadaMarcas==-1)
 		return false;
 	
 	// Recupera o mapa
 	C2D2M_Mapa *mapa = &mapas[idMapa-1];
-	// Intervalo de blocos em que verificamos a colis„o
+	// Intervalo de blocos em que verificamos a colis√£o
 	int topo, baixo, esquerda, direita;
 	// Calcula o extremo esquerdo
 	topo = y/mapa->dimensaoBlocoV;
@@ -1375,14 +1385,14 @@ bool C2D2M_ColidiuBlocoCenario(unsigned int idMapa, int x, int y, int larg, int 
 	for(int lin=topo;lin<=baixo && ! cxy;lin++)
 		for(int col=esquerda;col<=direita && !cxy ;col++)
 		{
-			// O bloco È v·lido para colis„o?
-			// Ele È SE:
-			//			- Ele est· dentro do mapa
-			//		- Se ele È bloco (ele pode ser colidido)
-			// Testa ent„o se est· dentro do mapa
+			// O bloco √© v√°lido para colis√£o?
+			// Ele √© SE:
+			//			- Ele est√° dentro do mapa
+			//		- Se ele √© bloco (ele pode ser colidido)
+			// Testa ent√£o se est√° dentro do mapa
 			if(lin< 0 || lin >= mapa->altura || col < 0 || col >= mapa->largura)
 				continue;
-			// Testa se ele È v·lido
+			// Testa se ele √© v√°lido
 			if(mapa->camadas[mapa->camadaMarcas][mapa->largura*lin+col]==mapa->offbloco+bloco)
 				cxy = true;
 		}
@@ -1391,16 +1401,16 @@ bool C2D2M_ColidiuBlocoCenario(unsigned int idMapa, int x, int y, int larg, int 
 
 
 
-// MÈtodo para verificar se o cabeÁalho do FMP/FMA È correto
+// M√©todo para verificar se o cabe√ßalho do FMP/FMA √© correto
 //
 // Data: 26/01/2005
-// ⁄ltima atualizaÁ„o: 29/07/2007
+// √öltima atualiza√ß√£o: 29/07/2007
 
 bool C2D2M_VerificaCabecalhoArquivo(CabecalhoArquivo *cabecalho)
 {
-    // Est· certo por definiÁ„o
+    // Est√° certo por defini√ß√£o
     bool ok=true;
-    // Verifica se tem o FORM no comeÁo
+    // Verifica se tem o FORM no come√ßo
     for(int i=0;i<4;i++)
         if(cabecalho->tipo[i] != cabecalhos[0][i])
         {
@@ -1419,14 +1429,14 @@ bool C2D2M_VerificaCabecalhoArquivo(CabecalhoArquivo *cabecalho)
     return ok;
 }
 
-// FunÁ„o para verificar o tipo do cabeÁalho. Retorna um dos tipos enumerados
+// Fun√ß√£o para verificar o tipo do cabe√ßalho. Retorna um dos tipos enumerados
 //
 // Data: 26/01/2005
-// ⁄ltima atualizaÁ„o: 29/07/2007
+// √öltima atualiza√ß√£o: 29/07/2007
 
 int C2D2M_TipoBloco(CabecalhoBloco *cabecalho)
 {    
-    // Verifica se È o bloco do MPHD no comeÁo
+    // Verifica se √© o bloco do MPHD no come√ßo
     bool ok=true;
     for(int i=0;i<4;i++)
         if(cabecalho->tipo[i] != cabecalhos[2][i])
@@ -1436,7 +1446,7 @@ int C2D2M_TipoBloco(CabecalhoBloco *cabecalho)
         }
     if(ok)
         return CABECALHO_MPHD;
-    // Verifica se È o bloco do ANDT no comeÁo
+    // Verifica se √© o bloco do ANDT no come√ßo
     ok=true;
     for(int i=0;i<4;i++)
         if(cabecalho->tipo[i] != cabecalhos[3][i])
@@ -1446,7 +1456,7 @@ int C2D2M_TipoBloco(CabecalhoBloco *cabecalho)
         }
     if(ok)
         return CABECALHO_ANDT;
-    // Verifica se È o bloco do BODY no comeÁo
+    // Verifica se √© o bloco do BODY no come√ßo
     ok=true;
     for(int i=0;i<4;i++)
         if(cabecalho->tipo[i] != cabecalhos[4][i])
@@ -1456,7 +1466,7 @@ int C2D2M_TipoBloco(CabecalhoBloco *cabecalho)
         }
     if(ok)
         return CABECALHO_BODY;
-    // Verifica se È uma camada (o quarto caracter È o n˙mero da camada)
+    // Verifica se √© uma camada (o quarto caracter √© o n√∫mero da camada)
     ok=true;
     for(int i=0;i<3;i++)
         if(cabecalho->tipo[i] != cabecalhos[5][i])
@@ -1469,4 +1479,46 @@ int C2D2M_TipoBloco(CabecalhoBloco *cabecalho)
     
     // Por default
     return CABECALHO_IGNORADO;
+}
+
+// Fun√ß√£o que recupera a camazda de marcas
+//
+// Data: 30/01/2010
+//
+//
+unsigned int C2D2M_PegaCamadaMarcas(unsigned int idMapa)
+{
+	// ÔøΩ um mapa vÔøΩlido?
+	if(idMapa==0 || idMapa >= C2D2M_MAX_MAPAS)
+		return -1;
+        return(mapas[idMapa-1].camadaMarcas);
+}
+
+// Fun√ß√£o para mudar o valor de um bloco em uma camada espec√≠fica
+//
+// Data: 30/01/2010
+// ÔøΩltima atualizaÔøΩÔøΩo: 30/01/2010
+//
+void C2D2M_AlteraBloco(unsigned int idMapa, int camada, int x, int y, unsigned int valor)
+{
+    // ÔøΩ um mapa vÔøΩlido?
+    if(idMapa==0 || idMapa >= C2D2M_MAX_MAPAS)
+        return;
+    // Se nÔøΩo foi inicializado, falha!
+    if(!mapas[idMapa-1].inicializado)
+        return;
+    // A camada ÔøΩ vÔøΩlida?
+    if(camada<0 || camada>=C2D2M_MAX_CAMADAS)
+        return;
+    // Pega o ponteiro do mapa (mais rÔøΩpido)
+    C2D2M_Mapa *mapa = &mapas[idMapa-1];
+    // Testa se o layer existe
+    if(mapa->camadas[camada] == 0)
+        return;
+
+    // So muda o bloco se ele estiver dentro do mapa
+    if(x<0 || y<0 || x>=mapa->largura || y>=mapa->altura)
+        return;
+    mapa->camadas[camada][mapa->largura*y+x]=valor+mapa->offbloco;
+
 }

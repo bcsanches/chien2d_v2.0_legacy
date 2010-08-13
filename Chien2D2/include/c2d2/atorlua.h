@@ -26,8 +26,8 @@ Copyright 2008-2010, Fabio Vinicius Binder (fbinder@gmail.com)
 #define __ATORLUA_H__
 
 
-#include "ator.h"
-#include "chienlua2.h"
+#include <c2d2/ator.h>
+#include <c2d2/chienlua2.h>
 
 #define ATOR_LUA_INI 1024
 

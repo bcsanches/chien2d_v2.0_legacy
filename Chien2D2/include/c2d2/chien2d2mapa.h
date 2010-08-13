@@ -14,6 +14,16 @@ Copyright 2008-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
    limitations under the License.
 */
 
+/**
+
+	Data		Programador	Alteração
+	=====================================================
+	13/08/2010	Paulo VW Radtke	Funções para mudar uma camada do mapa e para pegar a camada de marcas.
+
+
+**/
+
+
 #ifndef C2D2MAPA_H
 #define C2D2MAPA_H
 
@@ -230,5 +240,11 @@ bool C2D2M_GravidadeMapa(unsigned int idMapa, double gravidade, double maxgravid
 bool C2D2M_VerificaCabecalhoArquivo(CabecalhoArquivo *cabecalho);
 // Método para verificar o tipo do cabeçalho. Retorna um dos tipos enumerados
 int C2D2M_TipoBloco(CabecalhoBloco *cabecalho);
+
+// Função que recupera a camazda de marcas
+unsigned int C2D2M_PegaCamadaMarcas(unsigned int idMapa);
+// Função para mudar o valor de um bloco em uma camada específica
+void C2D2M_AlteraBloco(unsigned int idMapa, int camada, int x, int y, unsigned int valor);
+
 
 #endif

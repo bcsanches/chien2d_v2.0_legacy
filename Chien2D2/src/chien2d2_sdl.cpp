@@ -16,6 +16,19 @@ Copyright 2007-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
+/**
+	Data original: 12/06/20 08
+
+	Histórico de alterações:
+
+	Data       Programador      Alteração
+	========== ================ ======================================================================
+	12/08/2010 Paulo Radtke	    Inclusão do callback do usuário durante a sincronização.
+
+**/
+
+
 // Includes padrão do C
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +37,9 @@ Copyright 2007-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
 #include <c2d2/chien2d2.h>
 #include <c2d2/chien2d2_interno.h>
 #include <c2d2/chien2d2_sdl.h>
+
+// Variável externa para a função de callback do usuário durante a sincronização
+extern void (*C2D2_SincronizaUsuario)();
 
 // A cor que usa para limpar a tela
 Uint32 clearColor = 0;
@@ -157,10 +173,17 @@ void C2D2SDL_Encerra()
 //
 // Data: 13/04/2007
 //
+// Alteração:
+//	12/08/2010	Paulo Radtke	Chamada do callback do usuário.
+//
 void C2D2SDL_Sincroniza(Uint8 fps)
 {
     // Inicializa e pega o tempo atual (só faz isso a primeira vez)
     static Uint32 tempoAnterior=0;
+
+    // Chama a função de sincronização do usuário
+    if(C2D2_SincronizaUsuario != 0)
+        C2D2_SincronizaUsuario();
 
 	// Verifica se o parâmetro é válido
 	if (fps <= 0) fps = 1;
@@ -285,6 +308,7 @@ unsigned int C2D2SDL_CarregaSpriteSet(const char *arquivo, int largura, int altu
 
     // Preenche as dimensões da imagem do spriteset
 	sprites[idx].largura = sprites[idx].imagem->w;
+
 	sprites[idx].altura = sprites[idx].imagem->h;
     // Preenche as dimensões dos sprites. Se for menor ou igual a 0, pega a da imagem em si
 	if(largura > 0 && altura > 0)

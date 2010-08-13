@@ -14,6 +14,17 @@ Copyright 2008-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
    limitations under the License.
 */
 
+/******************************
+
+Modificações:
+
+	12/08/2010 - Inclusão da função para definir o callback de sincronização do usuário.
+		Inclui a definição do ponteiro de função e da função que o preenche. O callback
+		deve ser invocado na função específica de sincronização do renderer específico.
+		Responsável: Paulo V. W. Radtke
+
+*******************************/
+
 #include <c2d2/chien2d2.h>
 #include <c2d2/chien2d2_sdl.h>
 #include <c2d2/chien2d2_gl.h>
@@ -72,7 +83,8 @@ C2D2_Botao teclas[C2D2_MAXTECLAS];
 C2D2_Mouse mouse;
 // Indica o tipo de render utilizado pela lib
 int render;
-
+// Função de sincronização do jogo do usuário
+void (*C2D2_SincronizaUsuario)()=0;
 
 // Função que inicia a Chien2D 2 de acordo com o tipo do render.
 //
@@ -1282,3 +1294,12 @@ void C2D2_Pausa(Uint32 pausa)
 {
 	SDL_Delay(pausa);
 }
+
+// Função que indica qual a função de sincronização do usuário vai ser usada.
+//
+// Data: 24/07/2010
+void C2D2_DefineSincronizaUsuario(void (*funcao)())
+{
+    C2D2_SincronizaUsuario = funcao;
+}
+

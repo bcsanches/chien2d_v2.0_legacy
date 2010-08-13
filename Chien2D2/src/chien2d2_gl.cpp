@@ -25,6 +25,7 @@ Copyright 2008-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
 								variável maxtexsize alterada de local para global
 								
 	27/07/2010 Paulo Radkte     Corrigido bug para texturas que continuavam limitada a 1024x1024
+	12/08/2010 Paulo Radtke	    Inclusão do callback do usuário durante a sincronização.
 
 **/
 // Includes padrão do C
@@ -36,6 +37,9 @@ Copyright 2008-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
 #include <c2d2/chien2d2.h>
 #include <c2d2/chien2d2_interno.h>
 #include <c2d2/chien2d2_gl.h>
+
+// Variável externa para a função de callback do usuário durante a sincronização
+extern void (*C2D2_SincronizaUsuario)();
 
 // indica a cor para limpar a tela, incluindo o alpha
 GLubyte limpaR, limpaG, limpaB, limpaA;        
@@ -244,10 +248,16 @@ void C2D2GL_Encerra()
 //
 // Data: 13/04/2007
 //
+// Alteração:
+//	12/08/2010	Paulo Radtke	Chamada do callback do usuário.
+//
 void C2D2GL_Sincroniza(Uint8 fps)
 {
     // Inicializa e pega o tempo atual (só faz isso a primeira vez)
     static Uint32 tempoAnterior=0;
+    // Chama a função de sincronização do usuário
+    if(C2D2_SincronizaUsuario != 0)
+        C2D2_SincronizaUsuario();
 
 	// Verifica se o parâmetro é válido
 	if (fps <= 0) fps = 1;
@@ -738,6 +748,7 @@ bool C2D2GL_DesenhaSpriteEfeito(unsigned int id, unsigned int indice, int x[4], 
     glVertex2f(x[0], y[0]);
     // E assim por diante
     glTexCoord2f(posx+largura, posy); 
+
 	glVertex2f( x[1], y[1]);
     glTexCoord2f(posx+largura, posy+altura); 
     glVertex2f( x[2], y[2]);

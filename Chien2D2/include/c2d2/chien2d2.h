@@ -25,7 +25,10 @@ Copyright 2008-2010, Paulo Vinicius Wolski Radtke (pvwradtke@gmail.com)
 	========== ================ ======================================================================
 	23/01/2010 Fabio Binder     Inserida constante simbólica RAD_ANG
 	21/05/2010 Fabio Binder		Inserido o parâmetro de quadros/s em C2D2_Sincroniza
-								Criadas as contantes C2D2_FPS_
+ 							Criadas as contantes C2D2_FPS_
+	12/08/2010 Paulo V. W. Radtke Inclusão da função para definir o callback de sincronização do usuário.
+				Inclui a definição do ponteiro de função e da função que o preenche. O callback
+				deve ser invocado na função específica de sincronização do renderer específico.
 
 **/
 
@@ -253,5 +256,10 @@ C2D2_Mouse* C2D2_PegaMouse();
 // Função de pausa (wrapper)
 
 void C2D2_Pausa(Uint32 pausa);
+
+// Função que indica qual a função de sincronização do usuário vai ser usada.
+//
+// Data: 24/07/2010
+void C2D2_DefineSincronizaUsuario(void (*funcao)());
 
 #endif

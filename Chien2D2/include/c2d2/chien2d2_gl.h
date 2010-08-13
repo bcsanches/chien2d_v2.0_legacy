@@ -65,7 +65,7 @@ bool C2D2GL_DesenhaSpriteEfeito(unsigned int identificador, unsigned int indice,
 // Protótipos de funções internas da versão Open GL
 inline void resetaGL();
 inline void alteraBlend(bool estado);
-inline void setaTexturizacao(bool estado);
+void setaTexturizacao(bool estado);
 inline void modoBlend(GLenum fatorOrigem, GLenum fatorDestino);
 inline void setaTextura(GLuint textura);
 inline void modoWrapTextura(GLenum wrapTexturaS, GLenum wraptTexturaT);

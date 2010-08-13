@@ -5,7 +5,7 @@ OBJ = ./obj/
 
 #libsc2d2 = -lSDL -lSDL_image -lGL -lGLU
 
-comp = g++ -g -c -I $(INC)
+comp = g++ -g -O3 -c -I $(INC)
 
 objc2d2f = $(OBJ)chien2d2.o $(OBJ)chien2d2_sdl.o $(OBJ)chien2d2_gl.o \
 	$(OBJ)chien2d2primitivas.o $(OBJ)chien2d2primitivas_sdl.o \

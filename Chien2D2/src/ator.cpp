@@ -318,14 +318,14 @@ void ATOR_AplicaEstado(Ator *a, unsigned int mapa, unsigned int larguratela,
 			int olddxi=dxi, olddyi=dyi;
 			//if(dx<0)
 			//	dxi*=-1;
-			//printf("A: dx: %i, dy: %lf\n", dxi, dx);
-			printf("A: dxi: %i, dx: %lf\n", dxi, dx);
+			
+			//printf("A: dxi: %i, dx: %lf\n", dxi, dx);
 			//if(dy<0)
 			//	dyi*=-1;
 
 			C2D2M_AjustaDeslocamento(mapa, (int)ceil(a->x-(vetorAtores[a->tipo].largura/2)), (int)ceil(a->y-vetorAtores[a->tipo].altura/2), 
 				vetorAtores[a->tipo].largura, vetorAtores[a->tipo].altura, &dxi, &dyi, aplicaGravidade);
-			printf("B: dxi: %i, dxi: %lf\n", dxi, dx);
+			//printf("B: dxi: %i, dxi: %lf\n", dxi, dx);
 			// Cada vez que colide com uma parede abaixo, deve zerar o tempo de queda
 			// Ajusta se necessário (se colidiu na horizontal)
 			if(dxi != olddxi)

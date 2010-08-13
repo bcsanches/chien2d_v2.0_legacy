@@ -791,7 +791,7 @@ inline void alteraBlend(bool estado)
 	faz_blend = estado;
 }
 
-inline void setaTexturizacao(bool estado)
+void setaTexturizacao(bool estado)
 {
 	if(texturiza == estado)
 		return;

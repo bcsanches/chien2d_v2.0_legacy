@@ -29,11 +29,20 @@ seguintes bibliotecas instaladas na versão desenvolvimento:
 	- SDL_mixer
 	- SDL_image
 	- OpenGL
+
+Opcionalmente, caso você deseje usar a linguagem Lua para desenvolver personagens,
+você também deve ter a seguinte lib disponível no seu sistema:
+
 	- Lua 5.1
 	
-Na pasta Chien2D2, digite o seguinte comando para construir a biblioteca:
+Na pasta Chien2D2, digite o seguinte comando para construir a biblioteca mínima, 
+sem suporte a Lua:
 
 	make
+
+Para compilar também o módulo Lua, você deve usar o comando:
+
+   make all
 	
 Isto irá gerar uma biblioteca estática, que pode ser ligada e distribuída sem
 restrição em sua aplicação.Uma vez compilada sem erros, a biblioteca pode ser 
@@ -48,6 +57,11 @@ ação. Os arquivos da biblioteca são instalados em /usr/lib, já os includes e
 O processo foi testado em Ubuntu 10.04 64 bits, mas deve executar sem problemas
 em qualquer distribuição GNU Linux.
 	
+Para remover a biblioteca do sistema, como administrador do sistema, basta usar
+ o comando:
+
+   sudo make uninstall
+
 3 - Compilando um aplicativo
 ----------------------------
 
@@ -68,7 +82,9 @@ seguintes:
 	-lc2d2lua (inclui a Chien2D 2.0 Lua, opcional, ligação com a linguagem LUA)
 	
 Estes switches devem ser informados ao g++, seja em linha de comando ou em IDEs
-como o NetBeans.
+como o NetBeans. Note que como este processo é de ligação, as libs devem ser espe-
+cificadas ao g++ após a definição do alvo, não antes. No caso do Netbeans, inclua
+os arquivos da lib no projeto, ao invés de parâmetros de linha de comando no Linker.
 
 4 - Contato:
 ------------

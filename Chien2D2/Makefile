@@ -22,6 +22,8 @@ objcator = ator.o
 objc2d2luaf = $(OBJ)chienlua2.o $(OBJ)chien2d2lua.o $(OBJ)chienaudio2lua.o $(OBJ)atorlua.o
 objc2d2lua = chienlua2.o chien2d2lua.o chienaudio2lua.o atorlua.o
 
+minimal: libc2d2 libca2 libcm2 libcator
+
 all: libc2d2 libca2 libcm2 libcator libc2d2lua
 
 libc2d2 : $(objc2d2)
@@ -67,5 +69,7 @@ atorlua.o :
 	$(comp) $(SRC)atorlua.cpp -o $(OBJ)atorlua.o		
 install :
 	cp -r $(INC)/* /usr/include/ ; cp $(LIB)*.a /usr/lib/
+uninstall:
+	rm -rf /usr/include/c2d2 ; rm /usr/lib/libc2d2.a /usr/lib/libca2.a /usr/lib/libcm2.a /usr/lib/libcator.a /usr/lib/libc2d2lua.a
 clean :
 	rm $(OBJ)*.o $(LIB)*.a

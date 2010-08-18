@@ -42,7 +42,7 @@ bool ATOR_CarregaAtorEstaticoLua(const char *arquivo_lua,
 	int lbb        = (int) CL2_DoubleEstrutura("largura_bounding_box", estado_lua);
 	int abb        = (int) CL2_DoubleEstrutura("altura_bounding_box", estado_lua);
 	bool rotacionar = CL2_BoolEstrutura("rotacionar", estado_lua);
-	strcpy(arquivo, CL2_StringEstrutura("arquivo", estado_lua));
+	CL2_StringEstrutura(arquivo, "arquivo", estado_lua);
 
 	// Inicia animações
 	CL2_IniciaSubEstrutura("animacoes", estado_lua);

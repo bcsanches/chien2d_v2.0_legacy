@@ -41,11 +41,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="\Fabio\Meus\Cursos\Comum\lua\include;E:\Fabio\Meus\Cursos\PUCPR\Disciplinas\Graduacao\Jogos\tutoria\Exemplos\Chien2D2\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;__USES_LUA__"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\Chien2D2\include\&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;__USES_LUA__;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="sdlmain.lib sdl.lib sdl_image.lib sdl_mixer.lib opengl32.lib glu32.lib lua51.lib c2d2.lib ca2.lib c2d2lua.lib cator.lib cm2.lib"
+				AdditionalDependencies="lua5.1.lib opengl32.lib SDL.lib SDL_mixer.lib SDL_image.lib SDLmain.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="\Fabio\Meus\Cursos\Comum\lua;E:\Fabio\Meus\Cursos\PUCPR\Disciplinas\Graduacao\Jogos\tutoria\Exemplos\Chien2D2\lib"
+				AdditionalLibraryDirectories=""
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -120,7 +120,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\Chien2D2\include\&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__USES_LUA__"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -139,6 +140,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="sdlmain.lib sdl.lib sdl_image.lib sdl_mixer.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="lua5.1.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"

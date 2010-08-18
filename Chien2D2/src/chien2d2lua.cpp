@@ -84,7 +84,7 @@ unsigned int C2D2_CarregaSpriteSetLua(const char *arquivo_lua, char *chave) {
 	CL2_IniciaEstrutura(chave, estado_lua);
 	largura    = (int) CL2_DoubleEstrutura("largura_quadro", estado_lua);
 	altura     = (int) CL2_DoubleEstrutura("altura_quadro", estado_lua);
-	strcpy(arquivo, CL2_StringEstrutura("arquivo", estado_lua));
+	CL2_StringEstrutura(arquivo, "arquivo", estado_lua);
 
 	int aux = C2D2_CarregaSpriteSet(arquivo, largura, altura);
 

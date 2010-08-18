@@ -14,6 +14,17 @@ Copyright 2010, Fabio Vinicius Binder (fbinder@gmail.com)
    limitations under the License.
 */
 
+/**
+	Data: 18/08/2010
+
+	Histórico de alterações:
+
+	Data       Programador      Alteração
+	========== ================ ======================================================================
+	18/08/2010 Bruno Sanches    Corrigido bug de retornar endereço de variavel local em CL2_StringEstrutura
+
+**/
+
 #include <string.h>
 #include <c2d2/chienlua2.h>
 
@@ -94,15 +105,12 @@ void CL2_IniciaEstrutura(char *nome, lua_State *estado_lua)
 //Objetivo: pegam valores de dentro de uma estrutura composta
 //Parâmetros: nome do campo
 //
-char *CL2_StringEstrutura(char *nome, lua_State *estado_lua)
-{
-	char aux[255];
+void CL2_StringEstrutura(char *out, const char *nome, lua_State *estado_lua)
+{	
 	lua_pushstring(estado_lua, nome);
 	lua_gettable(estado_lua, -2);
-	strcpy(aux, lua_tostring(estado_lua,-1)); 
+	strcpy(out, lua_tostring(estado_lua,-1)); 
 	lua_pop(estado_lua,1);
-
-	return aux;
 }
 
 double CL2_DoubleEstrutura(char *nome, lua_State *estado_lua)

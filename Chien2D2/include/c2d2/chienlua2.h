@@ -60,7 +60,7 @@ Copyright 2010, Fabio Vinicius Binder (fbinder@gmail.com)
 	//Objetivo: pegam valores de dentro de uma estrutura composta
 	//Parâmetros: nome do campo
 	//
-	char *CL2_StringEstrutura(char *nome, lua_State *estado_lua = estado_lua_config);
+	void CL2_StringEstrutura(char *saida, const char *nome, lua_State *estado_lua = estado_lua_config);
 
 	double CL2_DoubleEstrutura(char *nome, lua_State *estado_lua = estado_lua_config);
 

@@ -31,6 +31,16 @@ seguintes bibliotecas instaladas na versão desenvolvimento:
 	- OpenGL
 	- Lua 5.1
 	
+Caso não possua as bibliotecas, existe um pacote pré compilador para Windows neste 
+link: http://chien2d.googlecode.com/files/Dependencias_win32_20100824.zip
+Basta fazer o download e extrair o conteudo do arquivo no mesmo diretório da Chien2D.
+
+Os projetos já estão todos pré-configurados para utilizar o pacote de dependências acima, bastando apenas
+extrair o conteudo do pacote para o mesmo diretório da Chien2D. 
+
+Caso não queira utilizar o pacote de dependências e tenho dificuldade para configurar
+as bibliotecas manualmente, recomendamos a leitura: http://www.pontov.com.br/site/index.php/cpp/46-conceitos-basicos/155-como-usar-bibliotecas-cc
+	
 Na pasta Exemplos\TowerDefenseLua, abra o arquivo Projeto1.sln e escolha a opção Rebuild Solution.
 
 Isto irá gerar uma biblioteca estática, que pode ser ligada e distribuída sem

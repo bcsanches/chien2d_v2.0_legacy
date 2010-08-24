@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\include\&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\include\&quot;;&quot;$(ProjectDir)..\..\Dependencias\lua\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_image\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_mixer\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -106,7 +106,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\include\&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\include\&quot;;&quot;$(ProjectDir)..\..\Dependencias\lua\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_image\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_mixer\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

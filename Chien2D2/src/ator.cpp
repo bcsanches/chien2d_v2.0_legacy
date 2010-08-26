@@ -108,7 +108,7 @@ bool ATOR_CarregaAtorEstatico(unsigned int tipo, char *spriteset, int lsprite,
 		return false;
 	}
 	// Carrega os sons do ator
-	for(int i=0;i<numSons;i++)
+	for(unsigned int i=0;i<numSons;i++)
 	{
 		vetorAtores[tipo].sons[i] = CA2_CarregaEfeito(sons[i]);
 		// Falhou ao carregar o som? Não é um erro crítico , mas pode ocorrer
@@ -170,7 +170,7 @@ bool ATOR_DescarregaAtor(unsigned int tipo)
 		C2D2_RemoveSpriteSet(vetorAtores[tipo].spriteset);
 	vetorAtores[tipo].spriteset=0;
 	// Apaga os sons da memória
-	for(int i=0;i<vetorAtores[tipo].numSons;i++)
+	for(unsigned int i=0;i<vetorAtores[tipo].numSons;i++)
 		if(vetorAtores[tipo].sons[i])
 			CA2_RemoveEfeito(vetorAtores[tipo].sons[i]);
 	vetorAtores[tipo].numSons=0;
@@ -508,7 +508,7 @@ void ATOR_AplicaEstado(Ator *a, unsigned int mapa, unsigned int larguratela,
 		}
 	}
 	// Atualiza a animação. Se chegar no limite, troca o quadro
-	if(++a->tempoQuadro >= vetorAtores[a->tipo].animacoes[a->numAnimacao].tempo)
+	if(++a->tempoQuadro >= (int)vetorAtores[a->tipo].animacoes[a->numAnimacao].tempo)
 	{
 		// Zera o tempo do quadro
 		a->tempoQuadro = 0;
@@ -583,8 +583,8 @@ void ATOR_Desenha(Ator *a, unsigned int idMapa, int xtela, int ytela)
 	if(!vetorAtores[a->tipo].spriteset || a->estado.estado==ATOR_NASCENDO || a->estado.estado==ATOR_MORTO || a->estado.estado==ATOR_ENCERRADO)
 		return;
 	// Aonde vai desenhar o ator na tela
-	int x = a->x+xtela;
-	int y = a->y+ytela;
+	int x = (int)(a->x+xtela);
+	int y = (int)(a->y+ytela);
 	// Testa se tem um mapa válido para ajustar as coordenadas do mapa na tela
 	if(idMapa != 0)
 	{
@@ -605,14 +605,14 @@ void ATOR_Desenha(Ator *a, unsigned int idMapa, int xtela, int ytela)
 	{
 		// Aqui desenha o sprite rotacionado
 		// Calcula os pontos extremos originais em relação ao centro de gravidade do sprite
-		xrot[0]=x+vetorAtores[a->tipo].diag[0]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[0]));
-		xrot[1]=x+vetorAtores[a->tipo].diag[1]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[1]));
-		xrot[2]=x+vetorAtores[a->tipo].diag[2]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[2]));
-		xrot[3]=x+vetorAtores[a->tipo].diag[3]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[3]));
-		yrot[0]=y-vetorAtores[a->tipo].diag[0]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[0]));
-		yrot[1]=y-vetorAtores[a->tipo].diag[1]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[1]));
-		yrot[2]=y-vetorAtores[a->tipo].diag[2]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[2]));
-		yrot[3]=y-vetorAtores[a->tipo].diag[3]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[3]));
+		xrot[0]=(int)(x+vetorAtores[a->tipo].diag[0]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[0])));
+		xrot[1]=(int)(x+vetorAtores[a->tipo].diag[1]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[1])));
+		xrot[2]=(int)(x+vetorAtores[a->tipo].diag[2]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[2])));
+		xrot[3]=(int)(x+vetorAtores[a->tipo].diag[3]*cos(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[3])));
+		yrot[0]=(int)(y-vetorAtores[a->tipo].diag[0]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[0])));
+		yrot[1]=(int)(y-vetorAtores[a->tipo].diag[1]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[1])));
+		yrot[2]=(int)(y-vetorAtores[a->tipo].diag[2]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[2])));
+		yrot[3]=(int)(y-vetorAtores[a->tipo].diag[3]*sin(ATOR_ANG_RAD*(a->olhandoPara+vetorAtores[a->tipo].angulos[3])));
 		C2D2_DesenhaSpriteEfeito(vetorAtores[a->tipo].spriteset,
 			vetorAtores[a->tipo].animacoes[a->numAnimacao].quadros[a->quadroAtual],
 			xrot, yrot, 255, 255, 255, 255);
@@ -673,28 +673,28 @@ bool ATOR_ColidiuAtores(Ator *a, Ator *b)
 		return false;
 	// Testa a colisão do bounding box
 	int dx, dy;
-	dx = a->x+vetorAtores[a->tipo].x[0]+vetorAtores[a->tipo].xref - (b->x+vetorAtores[b->tipo].x[0]+vetorAtores[b->tipo].xref);
-	dy = a->y+vetorAtores[a->tipo].y[0]+vetorAtores[a->tipo].yref - (b->y+vetorAtores[b->tipo].y[0]+vetorAtores[b->tipo].yref);
+	dx = (int)(a->x+vetorAtores[a->tipo].x[0]+vetorAtores[a->tipo].xref - (b->x+vetorAtores[b->tipo].x[0]+vetorAtores[b->tipo].xref));
+	dy = (int)(a->y+vetorAtores[a->tipo].y[0]+vetorAtores[a->tipo].yref - (b->y+vetorAtores[b->tipo].y[0]+vetorAtores[b->tipo].yref));
 	if( (dx>=0 && dx<vetorAtores[b->tipo].largura) || (dx<0 && abs(dx)<vetorAtores[a->tipo].largura))
 		if( (dy>=0 && dy<vetorAtores[b->tipo].altura) || (dy<0 && -dy<vetorAtores[a->tipo].altura))
 			if(C2D2_ColidiuSprites(vetorAtores[a->tipo].spriteset, 
 					vetorAtores[a->tipo].animacoes[a->numAnimacao].quadros[a->quadroAtual], 
-					a->x+vetorAtores[a->tipo].x[0], a->y+vetorAtores[a->tipo].y[0],
+					(int)(a->x+vetorAtores[a->tipo].x[0]), (int)(a->y+vetorAtores[a->tipo].y[0]),
 					vetorAtores[b->tipo].spriteset, 
 					vetorAtores[b->tipo].animacoes[b->numAnimacao].quadros[b->quadroAtual], 
-					b->x+vetorAtores[b->tipo].x[0], b->y+vetorAtores[b->tipo].y[0]))
+					(int)(b->x+vetorAtores[b->tipo].x[0]), (int)(b->y+vetorAtores[b->tipo].y[0])))
 				{
 					Evento e;
 					e.tipoEvento = EVT_COLIDIU_PERSONAGEM;
 					// indica o tipo do personagem b para o personagem a
 					e.subtipo = b->tipo;
-					e.x = a->x;
-					e.y = a->y;
+					e.x = (int)a->x;
+					e.y = (int)a->y;
 					ATOR_EnviaEvento(a, &e);
 					// indica o tipo do personagem a para o personagem b
 					e.subtipo = a->tipo;
-					e.x = b->x;
-					e.y = b->y;
+					e.x = (int)b->x;
+					e.y = (int)b->y;
 					ATOR_EnviaEvento(b, &e);
 					// retorna verdade
 					return true;
@@ -708,8 +708,8 @@ bool ATOR_ColidiuBlocoCenario(Ator *a, unsigned int idMapa, unsigned int codBloc
 	if(a==0)
 		return false;
 	// Por default, não colide
-	return C2D2M_ColidiuBlocoCenario(idMapa, a->x-vetorAtores[a->tipo].largura/2, 
-		a->y-vetorAtores[a->tipo].altura/2, vetorAtores[a->tipo].largura, 
+	return C2D2M_ColidiuBlocoCenario(idMapa, (int)(a->x-vetorAtores[a->tipo].largura/2), 
+		(int)(a->y-vetorAtores[a->tipo].altura/2), vetorAtores[a->tipo].largura, 
 		vetorAtores[a->tipo].altura, codBloco);
 }
 
@@ -733,7 +733,7 @@ void ATOR_TocaEfeitoTela(Ator *a, unsigned int id, unsigned int mapa)
 	if(vetorAtores[a->tipo].spriteset)
 		if(id < vetorAtores[a->tipo].numSons)
 			if(vetorAtores[a->tipo].sons[id])
-				CA2_TocaEfeitoTela(vetorAtores[a->tipo].sons[id], a->x-xref);
+				CA2_TocaEfeitoTela(vetorAtores[a->tipo].sons[id], (int)(a->x-xref));
 }
 
 // Função para enviar um evento para o jogo. Retorna verdadeiro se conseguiu enviar o

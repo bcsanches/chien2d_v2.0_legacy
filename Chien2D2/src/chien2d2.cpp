@@ -195,7 +195,7 @@ bool C2D2_ColidiuSprites(unsigned int id1, unsigned int indice1, int x1, int y1,
 	offx=x2-x1;
 	offy=y2-y1;
 	// verifica se os índices dos sprites são válidos]
-	if(indice1 >= sprites[id1-1].matrizX*sprites[id1-1].matrizY || indice2 >= sprites[id2-1].matrizX*sprites[id2-1].matrizY)
+	if(indice1 >= (unsigned int)(sprites[id1-1].matrizX*sprites[id1-1].matrizY) || indice2 >= (unsigned int)(sprites[id2-1].matrizX*sprites[id2-1].matrizY))
 		return 0;
 	// Testa se o bounding box dos sprites se sobrepõe
 	// verifica quem está à esquerda
@@ -248,7 +248,7 @@ bool C2D2_ColidiuSprites(unsigned int id1, unsigned int indice1, int x1, int y1,
 	offx=x2-x1;
 	offy=y2-y1;
 	// verifica se os índices dos sprites são válidos]
-	if(indice1 >= sprites[id1-1].matrizX*sprites[id1-1].matrizY || indice2 >= sprites[id2-1].matrizX*sprites[id2-1].matrizY)
+	if(indice1 >= (unsigned int)(sprites[id1-1].matrizX*sprites[id1-1].matrizY) || indice2 >= (unsigned int)(sprites[id2-1].matrizX*sprites[id2-1].matrizY))
 		return 0;
 	// Testa se o bounding box dos sprites se sobrepõe
 	// verifica quem está à esquerda
@@ -282,7 +282,7 @@ bool C2D2_ColidiuSprites(unsigned int id1, unsigned int indice1, int x1, int y1,
 
 	// Se chegou aqui, retorna o resultado da colisão ponto-a-ponto
 	return C2D2_SobrepoeBitMasks(sprites[id1-1].bmask[indice1], 
-		sprites[id2-1].bmask[indice2], offx, offy);
+		sprites[id2-1].bmask[indice2], offx, offy) ? true : false;
 
 }
 

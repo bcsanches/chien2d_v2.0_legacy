@@ -341,11 +341,11 @@ void C2D2GL_LimitaAreaDesenho(int x, int y, int largura, int altura)
     glBegin(GL_QUADS);		       
     glColor4ub(255, 255, 255, 255);
     // Coordenada do vértice na tela
-    glVertex2f(x, y);
+    glVertex2f((GLfloat)x, (GLfloat)y);
     // E assim por diante
-	glVertex2f( x+largura, y);
-    glVertex2f( x+largura, y+altura);
-    glVertex2f(x, y+altura);
+	glVertex2f( (GLfloat) (x+largura), (GLfloat)y);
+    glVertex2f( (GLfloat)(x+largura), (GLfloat)(y+altura));
+    glVertex2f((GLfloat)x, (GLfloat)(y+altura));
     // Encerra o quad
     glEnd();
 	glStencilFunc(GL_EQUAL, 1, 1);						// We Draw Only Where The Stencil Is 1
@@ -642,7 +642,7 @@ void C2D2GL_RemoveSpriteSet(unsigned int id)
 	if(sprites[id-1].bmask != 0)
 	{
 		// Apaga as máscaras do vetor
-		for(unsigned int i=0;i<sprites[id-1].matrizX*sprites[id-1].matrizY;i++)
+		for(int i=0;i<sprites[id-1].matrizX*sprites[id-1].matrizY;i++)
 			C2D2_RemoveBitMask(sprites[id-1].bmask[i]);
 		// Apaga o vetor das máscaras     
 		free(sprites[id-1].bmask);
@@ -664,7 +664,7 @@ bool C2D2GL_DesenhaSprite(unsigned int id, unsigned int indice, int x, int y)
 		return false;
 	int idx = id-1;
 	// O índice é válido?
-	if(indice >= sprites[idx].matrizX * sprites[idx].matrizY || sprites[idx].textura==0)
+	if(indice >= (unsigned int)(sprites[idx].matrizX * sprites[idx].matrizY) || sprites[idx].textura==0)
 		return false;
 	// Tudo certo, calcula as coordenadas iniciais a desenhar na textura:
 	int xImg = (indice%sprites[idx].matrizX)*sprites[idx].spLargura;
@@ -690,16 +690,16 @@ bool C2D2GL_DesenhaSprite(unsigned int id, unsigned int indice, int x, int y)
     glBegin(GL_QUADS);		       
     glColor4ub(255, 255, 255, 255);
     // DEfine o primeiro vértice na textura
-    glTexCoord2f(posx, posy); 
+    glTexCoord2f((GLfloat)posx, (GLfloat)posy); 
     // Coordenada do vértice na tela
-    glVertex2f(x, y);
+    glVertex2f((GLfloat)x, (GLfloat)y);
     // E assim por diante
-    glTexCoord2f(posx+largura, posy); 
-	glVertex2f( x+sprites[idx].spLargura, y);
-    glTexCoord2f(posx+largura, posy+altura); 
-    glVertex2f( x+sprites[idx].spLargura, y+sprites[idx].spAltura);
-    glTexCoord2f(posx, posy+altura); 
-    glVertex2f(x, y+sprites[idx].spAltura);
+    glTexCoord2f((GLfloat)(posx+largura), (GLfloat)(posy)); 
+	glVertex2f( (GLfloat)(x+sprites[idx].spLargura), (GLfloat)y);
+    glTexCoord2f((GLfloat)(posx+largura), (GLfloat)(posy+altura)); 
+    glVertex2f( (GLfloat)(x+sprites[idx].spLargura), (GLfloat)(y+sprites[idx].spAltura));
+    glTexCoord2f((GLfloat)posx, (GLfloat)(posy+altura)); 
+    glVertex2f((GLfloat)x, (GLfloat)(y+sprites[idx].spAltura));
     // Encerra o quad
     glEnd();
 
@@ -717,7 +717,7 @@ bool C2D2GL_DesenhaSpriteEfeito(unsigned int id, unsigned int indice, int x[4], 
 		return false;
 	int idx = id-1;
 	// O índice é válido?
-	if(indice >= sprites[idx].matrizX * sprites[idx].matrizY || sprites[idx].textura==0)
+	if(indice >= (unsigned int)(sprites[idx].matrizX * sprites[idx].matrizY) || sprites[idx].textura==0)
 		return false;
 	// Tudo certo, calcula as coordenadas iniciais a desenhar na textura:
 	int xImg = (indice%sprites[idx].matrizX)*sprites[idx].spLargura;
@@ -743,17 +743,17 @@ bool C2D2GL_DesenhaSpriteEfeito(unsigned int id, unsigned int indice, int x[4], 
     glBegin(GL_QUADS);		       
     glColor4ub(r, g, b, a);
     // DEfine o primeiro vértice na textura
-    glTexCoord2f(posx, posy); 
+    glTexCoord2f((GLfloat)posx, (GLfloat)posy); 
     // Coordenada do vértice na tela
-    glVertex2f(x[0], y[0]);
+    glVertex2f((GLfloat)x[0], (GLfloat)y[0]);
     // E assim por diante
-    glTexCoord2f(posx+largura, posy); 
+    glTexCoord2f((GLfloat)(posx+largura), (GLfloat)posy); 
 
-	glVertex2f( x[1], y[1]);
-    glTexCoord2f(posx+largura, posy+altura); 
-    glVertex2f( x[2], y[2]);
-    glTexCoord2f(posx, posy+altura); 
-    glVertex2f(x[3], y[3]);
+	glVertex2f( (GLfloat)x[1], (GLfloat)y[1]);
+    glTexCoord2f((GLfloat)(posx+largura), (GLfloat)(posy+altura)); 
+    glVertex2f( (GLfloat)x[2], (GLfloat)y[2]);
+    glTexCoord2f((GLfloat)posx, (GLfloat)(posy+altura));
+    glVertex2f((GLfloat)x[3], (GLfloat)y[3]);
     // Encerra o quad
     glEnd();
 

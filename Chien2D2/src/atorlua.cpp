@@ -67,7 +67,7 @@ bool ATOR_CarregaAtorEstaticoLua(const char *arquivo_lua,
 		animacoes[i].numQuadros = (int)lua_objlen(estado_lua, -1);
 		int *quadros = new int[animacoes[i].numQuadros];
 
-		for (int j = 1; j <= animacoes[i].numQuadros; j++) {
+		for (unsigned int j = 1; j <= animacoes[i].numQuadros; j++) {
 			lua_pushinteger(estado_lua, j);
 			lua_gettable(estado_lua, -2);
 			quadros[j-1] = lua_tointeger(estado_lua, -1);

@@ -86,7 +86,7 @@ double CL2_Double(char *nome, lua_State *estado_lua)
 bool CL2_Bool(char *nome, lua_State *estado_lua)
 {
 	lua_getglobal(estado_lua, nome);
-	return lua_toboolean(estado_lua, -1);
+	return lua_toboolean(estado_lua, -1) ? true : false;
 }
 
 const char *CL2_String(char *nome, lua_State *estado_lua)
@@ -129,7 +129,7 @@ bool CL2_BoolEstrutura(char *nome, lua_State *estado_lua)
 	bool aux;
 	lua_pushstring(estado_lua, nome);
 	lua_gettable(estado_lua, -2);
-	aux = lua_toboolean(estado_lua,-1); 
+	aux = lua_toboolean(estado_lua,-1) ? true : false; 
 	lua_pop(estado_lua,1);
 
 	return aux;

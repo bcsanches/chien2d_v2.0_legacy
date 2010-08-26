@@ -409,7 +409,7 @@ void C2D2SDL_RemoveSpriteSet(unsigned int id)
 	if(sprites[id-1].bmask != 0)
 	{
 		// Apaga as máscaras do vetor
-		for(unsigned int i=0;i<sprites[id-1].matrizX*sprites[id-1].matrizY;i++)
+		for(int i=0;i<sprites[id-1].matrizX*sprites[id-1].matrizY;i++)
 			C2D2_RemoveBitMask(sprites[id-1].bmask[i]);
 		// Apaga o vetor das máscaras     
 		free(sprites[id-1].bmask);

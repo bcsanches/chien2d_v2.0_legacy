@@ -55,7 +55,7 @@ int x_torre = 660,
 int main(int ac, char **av)
 {
 	// Inicia semente de randomização
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	// Inicia bibliotecas
 	inicia_bibliotecas();

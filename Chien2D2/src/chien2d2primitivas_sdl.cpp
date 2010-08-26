@@ -99,7 +99,7 @@ void C2D2PSDL_Pontos(C2D2P_Ponto pontos[], unsigned int nPontos, unsigned char r
 	SDL_LockSurface(screen);
 	Uint32 cor = SDL_MapRGB(screen->format, r, g, b);
 	// Desenha os pontos
-	for(int i=0;i<nPontos;i++)
+	for(unsigned int i=0;i<nPontos;i++)
 		C2D2PSDL_PontoSDL(pontos[i][0], pontos[i][1], cor);
 	// Libera o display
 	SDL_UnlockSurface(screen);

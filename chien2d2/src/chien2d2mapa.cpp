@@ -520,7 +520,7 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
 
 	if(mapa->x<0 || mapa->y<0 || mapa->x>(mapa->larguraPixel-largura) 
 		|| mapa->y>( mapa->alturaPixel - altura))
-        return;
+        	return;
 	int xmapa, ymapa;
 	// Calcula o ponto de acordo com a velocidade do mapa
 	if(mapa->vCamadas[camada])
@@ -543,6 +543,7 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
 	rect.h=altura;
 	// Clipa!
 	SDL_SetClipRect(tela, &rect);*/
+	//C2D2_LimitaAreaDesenho(xtela, ytela, largura, altura);
 	// Determina as dimensões da tela em sprites (quanto vai desenhar)
 	int larguraSprites = largura/mapa->dimensaoBlocoH;
 	int alturaSprites = altura/mapa->dimensaoBlocoV;
@@ -585,6 +586,7 @@ void C2D2M_DesenhaCamadaMapa(unsigned int idMapa, int camada, int xtela, int yte
         }
 	// Retira o Clip
 	//SDL_SetClipRect(tela, 0);
+	//C2D2_LiberaAreaDesenho();
 }
 
 // função para buscar as coordenadas da primeira ocorrência de um bloco de marca dentro de um mapa

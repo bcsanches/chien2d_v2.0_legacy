@@ -70,12 +70,49 @@ seguintes (todas com extensão .lib):
 	
 Estas bibliotecas devem ser inseridas nas "input libraries" do visual studio.
 
-4 - Contato:
+4 - Compilando e Rodando os exemplos
+------------------------------------
+
+Dentro de Exemplos\ existe o arquivo Projeto1.sln, que é uma solução pronta para o Visual Studio C++,
+que pode ser usada com a versão comercial ou com a versão express (gratís).
+
+Caso não conheça o Visual C++: http://www.pontov.com.br/site/index.php/cpp/41-visual-c/59-como-utilizar-o-visual-c-parte-1
+
+Abrindo a solução deve-se encontrar os projetos:
+ - 01-imagens
+ - 02-loopjogo
+ - 03-animacao
+ - 05-megademo
+ - 06-baloes
+ - 07-tilemap
+ - c2d2
+ - c2d2lua
+ - ca2
+ - cator
+ - cmd2
+ - ExemploLua
+ 
+Os projetos numerados de 01 a 07 são os exemplos oficiais e "ExemploLua" demonstra como integrar lua com projetos Chien. Todos estes
+projetos geram executáveis, os demais geram as bibliotecas da Chiem que podem ser usadas com outros projetos.
+
+Para compilar os exemplos, basta clicar em um deles, por exemplo, "01-imagens" então clicar com o botão direito do mouse e selecionar
+a opção "Set as Startup Project". Basta agora pressionar F5 para que o projeto seja compilado e executado em modo debug.
+
+Caso ocorra um erro de "dll não encontrada" é preciso então configurar o projeto para encontrar as dlls necessárias, caso
+você esteja usando o pacote de depêndencias da Chien, basta então clicar no projeto com o botão direito, selecionar "Propriedades" e
+então na janela que se abriu clique em "Debugging" e na opção "Environment" coloque: PATH=$(SolutionDir)..\Dependencias\SDL\lib;$(SolutionDir)..\Dependencias\SDL_mixer\lib;$(SolutionDir)..\Dependencias\SDL_image\lib
+
+Caso não esteja usando o pacote de depêndencias configure a variável PATH de acordo com os caminhos do seu sistema
+
+5 - Contato:
 ------------
 
 Se preciso, você pode contatar os autores via e-mail:
 
 	Paulo V. W. Radtke - pvwradtke@gmail.com
 	Fabio V. Binder - fbinder@gmail.com
+	
+Suporte versão Windows:
+  Bruno C. Sanches - bcsanches@gmail.com 
 
 

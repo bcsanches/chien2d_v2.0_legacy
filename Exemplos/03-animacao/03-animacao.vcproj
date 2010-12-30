@@ -2,11 +2,11 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="ExemploLua"
-	ProjectGUID="{48450316-776A-4740-AFEF-780C79FE4BC8}"
-	RootNamespace="Projeto1"
+	Name="03-animacao"
+	ProjectGUID="{F13D4F7C-D628-45BF-8218-4A05E9E4B79C}"
+	RootNamespace="My03animacao"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -42,13 +42,12 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\Chien2D2\include\&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\lua\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_image\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_mixer\include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;__USES_LUA__;_CRT_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -62,15 +61,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="lua5.1.lib opengl32.lib SDL.lib SDL_mixer.lib SDL_image.lib SDLmain.lib"
+				AdditionalDependencies="SDL.lib SDL_mixer.lib SDL_image.lib SDLmain.lib opengl32.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\..\Dependencias\SDL\lib&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_image\lib&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_mixer\lib&quot;;&quot;$(ProjectDir)..\..\Dependencias\lua\&quot;"
-				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -120,12 +115,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\Chien2D2\include\&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\lua\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_image\include&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_mixer\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__USES_LUA__"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -139,16 +135,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="sdlmain.lib sdl.lib sdl_image.lib sdl_mixer.lib opengl32.lib glu32.lib"
-				AdditionalDependencies="lua5.1.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\..\Dependencias\SDL\lib&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_image\lib&quot;;&quot;$(ProjectDir)..\..\Dependencias\SDL_mixer\lib&quot;;&quot;$(ProjectDir)..\..\Dependencias\lua\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -183,15 +174,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\atualizar.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\inicializar.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TowerDefense.cpp"
+				RelativePath=".\animacao.cpp"
 				>
 			</File>
 		</Filter>
@@ -200,18 +183,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\atualizar.h"
-				>
-			</File>
-			<File
-				RelativePath=".\constantes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\inicializar.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

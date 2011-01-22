@@ -231,6 +231,8 @@ bool C2D2_ColidiuSprites(unsigned int id1, unsigned int indice1, int x1, int y1,
 					     unsigned int id2, unsigned int indice2, int x2, int y2, int x2b, int y2b, int l2b, int a2b);
 // Função para verificar a colisão entre quadrados de referência
 bool C2D2_ColidiuQuadrados(int x1b, int y1b, int l1b, int a1b, int x2b, int y2b, int l2b, int a2b);
+// função para retornar as diemnsões de um sprites
+bool C2D2_DimensoesSprite(unsigned int idx, int &largura, int &altura);
 
 // função comuns para carregar uma fonte na memória
 unsigned int C2D2_CarregaFonte(const char *arquivo, int dimensao);

@@ -287,6 +287,38 @@ bool C2D2_ColidiuSprites(unsigned int id1, unsigned int indice1, int x1, int y1,
 }
 
 
+// Função para retornar as dimensões de um sprites
+//
+//   Data: 22/01/2011
+//
+bool C2D2_DimensoesSprite(unsigned int idx, int *largura, int *altura)
+{
+	// Verifica se os sprites são válidos
+	if(idx == 0)
+	{
+		printf("Sprite inválido - 0.\n");
+		return false;
+	}
+	// Ajusta o indice
+	idx--;
+	// Verifica se o sprite existe mesmo
+	switch(render)
+	{
+	    case C2D2_DESENHO_PADRAO:
+	        if(sprites[idx].imagem == 0)
+	            return false;
+	        break;
+	    case C2D2_DESENHO_OPENGL:
+        	if( sprites[idx].textura==0)
+        		return false;
+	        break;
+	    default:
+	        return false;
+	}
+	*largura = sprites[idx].spLargura;
+	*altura = sprites[idx].spAltura;
+	return true;
+}
 
 
 ////////////////////////////////
@@ -1033,6 +1065,7 @@ void C2D2_PreencheVetorBitMasks(SDL_Surface *imagem, int spx, int spy, int limag
 					else
 						C2D2_SetBit(lbmask, x, y, 1);
 		}
+
 	// DEstrava a surface SDL
 	SDL_UnlockSurface(imagem);
 }

@@ -113,6 +113,22 @@ bool C2D2_Inicia(unsigned int largura, unsigned int altura, int modoVideo, int t
 	return false;
 }
 
+// função que indica as dimensões da tela
+//
+// Data: 26/01/2011
+//
+bool C2D2_DimensoesTela(int *largura, int *altura)
+{
+	if(inicializado)
+	{
+		*largura = screen->w;
+		*altura = screen->h;
+		return true;
+	}
+	else
+		return false;
+}
+
 
 // Procura um spriteset pelo nome do arquivo original
 //
@@ -530,6 +546,7 @@ unsigned int C2D2_ProcuraFonte(const char *apelido)
 bool C2D2_DesenhaTexto(unsigned int identificador, int x, int y, char const *texto, unsigned int alinhamento)
 {
     // A fonte existe?
+
     if(identificador > C2D2_MAX_FONTES || identificador ==0)
         return false;
     // A largura real do texto
@@ -623,7 +640,23 @@ bool C2D2_DimensoesTexto(unsigned int idFonte, const char *texto, int *largura, 
     return false;
 }
 
-
+// função para retornar a dimensão de uma fonte
+//
+// Data: 26/01/2011
+//
+bool C2D2_DimensaoFonte(unsigned int idx, int *altura)
+{
+	if(idx > C2D2_MAX_FONTES || idx == 0)
+		return false;
+	C2D2_Fonte *fonte = &(fontes[idx-1]);
+	if(fonte->idSpriteSet != 0)
+	{
+		//  Pega a altura
+		if(altura != 0)
+		*altura=fonte->tamanhoFonte;
+		return true;
+	}
+}
 
 // Funções inline auxiliares para pressionar um botão
 //
@@ -1335,4 +1368,5 @@ void C2D2_DefineSincronizaUsuario(void (*funcao)())
 {
     C2D2_SincronizaUsuario = funcao;
 }
+
 

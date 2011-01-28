@@ -193,7 +193,8 @@ typedef struct C2D2_Mouse
 
 // Função que inicia a Chien2D 2
 bool C2D2_Inicia(unsigned int largura, unsigned int altura, int modoVideo, int tipoRender, char *tituloJanela);
-
+// função que indica as dimensões da tela
+bool C2D2_DimensoesTela(int *largura, int *altura);
 // Função que encerra a Chien2D 2
 extern void (*C2D2_Encerra)();
 // Função para sincronizar o vídeo a n fps
@@ -208,6 +209,7 @@ extern void (*C2D2_LimitaAreaDesenho)(int x, int y, int largura, int altura);
 extern void (*C2D2_LiberaAreaDesenho)();
 // Função para recuperar o tempo do sistema
 unsigned long C2D2_TempoSistema();
+
 
 // Funções para manipular sprites
 
@@ -232,7 +234,7 @@ bool C2D2_ColidiuSprites(unsigned int id1, unsigned int indice1, int x1, int y1,
 // Função para verificar a colisão entre quadrados de referência
 bool C2D2_ColidiuQuadrados(int x1b, int y1b, int l1b, int a1b, int x2b, int y2b, int l2b, int a2b);
 // função para retornar as diemnsões de um sprites
-bool C2D2_DimensoesSprite(unsigned int idx, int &largura, int &altura);
+bool C2D2_DimensoesSprite(unsigned int idx, int *largura, int *altura);
 
 // função comuns para carregar uma fonte na memória
 unsigned int C2D2_CarregaFonte(const char *arquivo, int dimensao);
@@ -244,6 +246,9 @@ unsigned int C2D2_ProcuraFonte(const char *apelido);
 bool C2D2_DesenhaTexto(unsigned int identificador, int x, int y, char const *texto, unsigned int alinhamento);
 // Função para calcular as dimensões de um texto        
 bool C2D2_DimensoesTexto(unsigned int idFonte, const char *texto, int *largura, int *altura);
+// função para retornar a dimensão de uma fonte
+bool C2D2_DimensaoFonte(unsigned int idx, int *ltura);
+
 
 // Funções comuns de entrada
 

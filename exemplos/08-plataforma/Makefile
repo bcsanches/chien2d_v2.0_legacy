@@ -5,7 +5,7 @@ libs = -lSDL -lSDL_mixer -lSDL_image -lGL -lGLU -lc2d2 -lca2 -lcator -lcm2
 comp = g++ -g
 
 08-plataforma : $(objetos)
-	$(comp) -o 08-plataforma $(objetos) $(libs)
+	$(comp) -o 08-plataforma $(objetos) $(libs) -Wl,--rpath=\$$ORIGIN/libs
 
 main_plataforma.o :
 	$(comp) -c main_plataforma.cpp

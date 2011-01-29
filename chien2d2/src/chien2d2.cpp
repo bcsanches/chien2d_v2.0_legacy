@@ -656,6 +656,8 @@ bool C2D2_DimensaoFonte(unsigned int idx, int *altura)
 		*altura=fonte->tamanhoFonte;
 		return true;
 	}
+
+	return false;
 }
 
 // Funções inline auxiliares para pressionar um botão

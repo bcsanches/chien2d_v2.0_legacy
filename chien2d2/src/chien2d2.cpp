@@ -30,6 +30,8 @@ Modificações:
 #include <c2d2/chien2d2_gl.h>
 #include <c2d2/chien2d2_interno.h>
 
+#include <assert.h>
+
 // Ponteiros de funções
 // Função que encerra a Chien2D 2
 void (*C2D2_Encerra)()=0;
@@ -81,6 +83,9 @@ bool c_shutdown = false;
 C2D2_Botao teclas[C2D2_MAXTECLAS];
 // O mouse do sistema
 C2D2_Mouse mouse;
+
+static C2D2_Joystick joysticks[C2D2_MAX_JOYSTICKS] = {0};
+
 // Indica o tipo de render utilizado pela lib
 int render;
 // Função de sincronização do jogo do usuário
@@ -679,6 +684,21 @@ inline void C2D2_LiberaBotao(C2D2_Botao *botao)
 	botao->pressionado=false;
 }
 
+inline void C2D2_AtualizaDirecional(C2D2_Botao *botao, int sdlHatValue, int sdlHatFlag)
+{
+	if(sdlHatValue & sdlHatFlag)
+	{
+		if(!botao->pressionado)
+		{
+			C2D2_PressionaBotao(botao);
+		}
+	}
+	else if(botao->pressionado)
+	{						
+		C2D2_LiberaBotao(botao);
+	}
+}
+
 
 // Função auxiliar para processar uma tecla
 //
@@ -721,6 +741,16 @@ void C2D2_Entrada()
 	// Remove o liberamento do mpouse do passo anterior
 	for(int i=0;i<C2D2_MMAX;i++)
 		mouse.botoes[i].liberado=false;
+
+	for(int i = 0;i < C2D2_MAX_JOYSTICKS; ++i)
+	{
+		for(int j = 0;j < C2D2_MAX_JBOTOES; ++j)
+		{
+			joysticks[i].botoes[j].liberado = false;
+			joysticks[i].botoes[j].pressionado = false;
+		}
+	}
+
 
     // A estrutura que recebe os eventos
      SDL_Event event;
@@ -849,9 +879,52 @@ void C2D2_Entrada()
 					  break;
 				  }
 				  break;
+
+			  case SDL_JOYBUTTONDOWN:
+			  case SDL_JOYBUTTONUP:
+				  if(event.jbutton.which >= C2D2_MAX_JOYSTICKS)
+					  break;
+
+				  if(event.jbutton.button >= C2D2_MAX_JBOTOES)
+					  break;
+
+				  if(joysticks[event.jbutton.which].joystick == NULL)
+					  break;
+
+				  (event.jbutton.state == SDL_PRESSED ? C2D2_PressionaBotao : C2D2_LiberaBotao)(&joysticks[event.jbutton.which].botoes[event.jbutton.button]);
+				  break;	
+
+			  case SDL_JOYHATMOTION:
+				  if(event.jhat.which >= C2D2_MAX_JOYSTICKS)
+					  break;
+
+				  if(event.jhat.hat >= C2D2_MAX_DIRECIONAIS)
+					  break;
+
+				  {
+					C2D2_Joystick *joy = joysticks + event.jhat.which;
+					if(joy->joystick == NULL)
+					  break;			
+
+					C2D2_AtualizaDirecional(&joy->direcional[event.jhat.hat][C2D2_CIMA], event.jhat.value, SDL_HAT_UP);
+					C2D2_AtualizaDirecional(&joy->direcional[event.jhat.hat][C2D2_DIR_DIREITA], event.jhat.value, SDL_HAT_RIGHT);
+					C2D2_AtualizaDirecional(&joy->direcional[event.jhat.hat][C2D2_DIR_BAIXO], event.jhat.value, SDL_HAT_DOWN);
+					C2D2_AtualizaDirecional(&joy->direcional[event.jhat.hat][C2D2_DIR_ESQUERDA], event.jhat.value, SDL_HAT_LEFT);
+				  }
+				  break;
+
+			  case SDL_JOYBALLMOTION:
+				  if(event.jball.which >= C2D2_MAX_JOYSTICKS)
+					  break;
+
+				  if(event.jball.ball >= C2D2_MAX_DIRECIONAIS)
+					  break;
+
+				  C2D2_LiberaBotao(&mouse.botoes[C2D2_MMEIO]);
+				  break;
                                             
               default:
-                        break;
+					break;
         }
      }
 }
@@ -1371,4 +1444,73 @@ void C2D2_DefineSincronizaUsuario(void (*funcao)())
     C2D2_SincronizaUsuario = funcao;
 }
 
+//
+//
+//Lists os Joysticks no console
+
+int C2D2_ListaJoysticks()
+{
+	int num = SDL_NumJoysticks();
+	printf("Foram econtrados %i joysticks.\n\n", num );
+
+	if(num > 0)
+	{
+		printf("Sendo nomeados:\n");
+			
+		for( int i=0; i < num; i++ ) 
+		{
+			printf("    %s\n", SDL_JoystickName(i));
+		}
+	}
+
+	return num;
+}
+
+bool C2D2_LigaJoystick(int index)
+{
+	C2D2_Joystick *joystick = C2D2_PegaJoystick(index);
+	if(joystick == NULL)
+		return false;
+
+	if(joystick->joystick != NULL)
+		return true;
+
+	joysticks[index].joystick = SDL_JoystickOpen(index);
+	if(joysticks[index].joystick == NULL)
+		return false;
+
+	printf(
+		"Ligando joystick: %s, numBotoes: %d, numDirecionais: %d, numBalls: %d, numAxes: %d\n", 
+		SDL_JoystickName(index), 
+		SDL_JoystickNumButtons(joysticks[index].joystick),
+		SDL_JoystickNumHats(joysticks[index].joystick),
+		SDL_JoystickNumBalls(joysticks[index].joystick),
+		SDL_JoystickNumAxes(joysticks[index].joystick)
+	);
+
+	return joysticks[index].joystick != NULL;
+}
+
+void C2D2_DesligaJoystick(int index)
+{
+	C2D2_Joystick *joystick = C2D2_PegaJoystick(index);
+	if(joystick == NULL)
+		return;
+
+	if(joystick->joystick == NULL)
+		return;
+	
+	SDL_JoystickClose(joystick->joystick);
+}
+
+C2D2_Joystick *C2D2_PegaJoystick(int index)
+{
+	assert(index < C2D2_MAX_JOYSTICKS);
+	assert(index >= 0);
+
+	if((index < 0) || (index >= C2D2_MAX_JOYSTICKS))
+		return NULL;
+
+	return joysticks + index;
+}
 

@@ -106,6 +106,23 @@ enum {C2D2_MESQUERDO, C2D2_MDIREITO, C2D2_MMEIO, C2D2_MMAX};
 // Constanes para sincronização
 enum {C2D2_FPS_PADRAO = 60, C2D2_FPS_MINIMO = 1, C2D2_FPS_MAXIMO = 255};
 
+// Constantes dos botões do joystick
+enum {C2D2_JBOTAO_0, C2D2_JBOTAO_1, C2D2_JBOTAO_2, C2D2_JBOTAO_3, C2D2_JBOTAO_4, C2D2_JBOTAO_5, C2D2_JBOTAO_6, C2D2_JBOTAO_7, 
+		C2D2_JBOTAO_8, C2D2_JBOTAO_9, C2D2_JBOTAO_10, C2D2_JBOTAO_11,C2D2_JBOTAO_12,C2D2_JBOTAO_13,C2D2_JBOTAO_14,C2D2_JBOTAO_15,
+		C2D2_MAX_JBOTOES};
+
+enum { C2D2_JOYSTICK0, C2D2_JOYSTICK1, C2D2_JOYSTICK2, C2D2_JOYSTICK3, C2D2_MAX_JOYSTICKS };
+
+enum { C2D2_DIRECIONAL0, C2D2_DIRECIONAL1, C2D2_MAX_DIRECIONAIS };
+
+enum { 	
+	C2D2_DIR_CIMA,
+	C2D2_DIR_DIREITA,
+	C2D2_DIR_BAIXO,
+	C2D2_DIR_ESQUERDA,
+	C2D2_MAX_DIRS
+};
+
 //     A estrutura C2D2_BitMask define a máscara de bits para colisão.
 //
 // Data: 03/05/2007
@@ -191,6 +208,15 @@ typedef struct C2D2_Mouse
 	C2D2_Botao botoes[C2D2_MMAX];
 }C2D2_Mouse;
 
+typedef struct C2D2_Joystick
+{
+	SDL_Joystick *joystick;
+
+	C2D2_Botao botoes[C2D2_MAX_JBOTOES];
+
+	C2D2_Botao direcional[C2D2_MAX_DIRECIONAIS][C2D2_MAX_DIRS];
+} C2D2_Joystick;
+
 // Função que inicia a Chien2D 2
 bool C2D2_Inicia(unsigned int largura, unsigned int altura, int modoVideo, int tipoRender, char *tituloJanela);
 // função que indica as dimensões da tela
@@ -268,5 +294,13 @@ void C2D2_Pausa(Uint32 pausa);
 //
 // Data: 24/07/2010
 void C2D2_DefineSincronizaUsuario(void (*funcao)());
+
+//Lista nome dos joysticks no console
+int C2D2_ListaJoysticks();
+
+bool C2D2_LigaJoystick(int index);
+void C2D2_DesligaJoystick(int index);
+
+C2D2_Joystick *C2D2_PegaJoystick(int index);
 
 #endif

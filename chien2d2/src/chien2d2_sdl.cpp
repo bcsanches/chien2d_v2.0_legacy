@@ -63,7 +63,7 @@ bool C2D2SDL_Inicia(unsigned int largura, unsigned int altura,
 	c_shutdown = false;
 
     // Inicia o vídeo
-    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0 ) 
+	if (SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0 ) 
     {
         printf("A Chien2D 2 não conseguiu iniciar a SDL. Mensagem do sistema: %s\n", 
                 SDL_GetError());

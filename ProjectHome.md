@@ -1,0 +1,3 @@
+A Chien2D começou como um projeto pessoal para o desenvolvimento de jogos 2D em C/C++, evoluindo para uma biblioteca facilitadora para o desenvolvimento de jogos 2D, utilizada pelo autor em cursos de programação de jogos. O suporte inclui a criação de sprite sets, autômatos determinísticos para personagens, gerência de áudio, manipulação de tilemaps, etc. A biblioteca é multiplataforma, rodando em Windows, Linux e Mac OS X.
+
+Diversos jogos foram desenvolvidos na biblioteca desde 2007, inclusive dois finalistas do festival de jogos independentes do SBGames 2007 (Snakexpress e Goldberry Land), além do projeto Aliens and zombies no Glogal Game Jam 2010.

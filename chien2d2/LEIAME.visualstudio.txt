@@ -1,4 +1,4 @@
-Chien2D v2.0 
+﻿Chien2D v2.0 
 ============
 
 1 - Descrição
@@ -31,9 +31,16 @@ seguintes bibliotecas instaladas na versão desenvolvimento:
 	- OpenGL
 	- Lua 5.1
 	
-Caso não possua as bibliotecas, existe um pacote pré compilador para Windows neste 
+Caso não possua as bibliotecas, existe um pacote pré compilado para Windows neste 
 link: http://chien2d.googlecode.com/files/Dependencias_win32_20100824.zip
 Basta fazer o download e extrair o conteudo do arquivo no mesmo diretório da Chien2D.
+
+Para versão 2015 do Visual Studio (Update 2), as dependencias podem ser encontradas aqui: http://www.pontov.com.br/files/chien2d/Dependencias_20160506_vs2015_update2.7z
+
+Caso não queira baixar as bibliotecas das dependências, as mesmas estão pré configuradas através das variáveis de ambiente abaixo:
+	- SDL_HOME: diretório onde esta a SDL (ie. F:\develop\libs\SDL-1.2.15)
+	- SDL_IMAGE_HOME: diretório onde esta a SDL_image
+	- SDL_MIXER_HOME: diretório onde esta a SDL_mixer
 
 Os projetos já estão todos pré-configurados para utilizar o pacote de dependências acima, bastando apenas
 extrair o conteudo do pacote para o mesmo diretório da Chien2D. 

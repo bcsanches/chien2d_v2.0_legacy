@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(SDL_HOME)\include;$(SDL_IMAGE_HOME)\;$(SDL_MIXER_HOME)\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SDL_MIXER_HOME)\VisualC\Debug\;$(SDL_IMAGE_HOME)\VisualC\Debug\;$(SDL_HOME)\VisualC\Debug;$(LibraryPath)</LibraryPath>
+    <_PropertySheetDisplayName>SDLd</_PropertySheetDisplayName>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup />
+</Project>
